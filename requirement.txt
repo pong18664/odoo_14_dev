@@ -1,0 +1,4 @@
+pdfrw==0.4
+Faker==13.3.4
+num2words==0.5.10
+babel==2.9.1

@@ -1,0 +1,3 @@
+docker exec -it odoo14-production_db_1 bin/bash
+psql -d postgres -U odoo
+drop database test;
