@@ -1,7 +1,7 @@
-version: '2'
+version: '3'
 services:
   web:
-    image: odoo:14.custom 
+    image: odoo:14.custom
     # for mac m1 
     # platform: linux/amd64
     build: .
@@ -24,10 +24,10 @@ services:
   db:
     image: postgres:12
     # environment:
-    #   - POSTGRES_DB=postgres
-    #   - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    #   - POSTGRES_USER=odoo
-    #   - PGDATA=/var/lib/postgresql/data/pgdata
+      # - POSTGRES_DB=postgres
+      # - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      # - POSTGRES_USER=odoo
+      # - PGDATA=/var/lib/postgresql/data/pgdata
     env_file:
       - ./.env_postgres
     volumes:
@@ -35,6 +35,6 @@ services:
       - ./database/config:/mnt/config
     restart: unless-stopped
     command: postgres -c config_file=/mnt/config/postgresql.conf
-    cpus: ${CPUS}
-    # ports:
-    #   - "5432:5432"
+    # cpus: ${CPUS}
+    ports:
+      - "5432:5432"
