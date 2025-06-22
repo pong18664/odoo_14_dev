@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>     
+
+    <!-- Search and Filter -->
+    <record id="stcok_picking_view_search_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.view.search.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="analytic_account_id"/>
+                <filter string="Analytic Account" name="analytic_account_id" domain="[['analytic_account_id', '!=', False]]"
+                    context="{'group_by': 'analytic_account_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- View Form -->
+    <record id="stcok_picking_view_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Edit in form -->
+            <xpath expr="//field[@name='analytic_account_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+
+            <!-- Edit in tab 'Operations' -->
+            <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='analytic_account_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+
+            <!-- Edit in tab 'Detailed Operations' -->
+            <xpath expr="//field[@name='move_line_ids_without_package']/tree//field[@name='analytic_account_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

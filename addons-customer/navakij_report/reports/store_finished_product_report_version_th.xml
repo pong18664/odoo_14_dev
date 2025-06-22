@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_store_finished_product_version_th_custom">
+
+        <div class="header" style="font-size:14px; border-bottom:1px solid;">
+
+            <div class="row" style="width:100%; margin-left:0px;">
+              
+                <div class="col-2" style="width:150px; max-width:150px; min-width:150px; padding-top:10px;">
+                    <img style="width:100%;" t-att-src="image_data_uri(o.company_id.logo)" />
+                </div>
+                
+                <div class="col-8" style="padding-top:80px; text-align:right; width:540px; max-width:540px; min-width:540px;">
+                    <b style="font-size:24px;" t-field="o.company_id.name"/>
+                    <br/>
+                </div>
+                
+                <div class="col-2" style="width:180px; max-width:180px; min-width:180px;">
+                    <div class="col" style="text-align:right; margin-right:2px;">
+                        <span style="font-size:14;">หน้า                            
+                            <span style="margin-left:5px" class="page" />
+                            <span style="margin-left:5px"> ของ </span>
+                            <span style="margin-left:5px" class="topage" />
+                            <br/>
+                        </span>
+                    </div>
+                    <div class="col" style="width:150px; max-width:150px; min-width:150px;">
+                        <t t-if="o.company_id.image">
+                            <img style="width:100%;" t-att-src="image_data_uri(o.company_id.image)" />
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; font-size:14;">
+                <span t-field="o.company_id.street"/>
+                <span t-field="o.company_id.zip"/>
+                <br/>
+                <span>โทรศัพท์                    <span t-field="o.company_id.phone"/>
+                    <span t-field="o.company_id.email"/>
+                เลขประจำตัวผู้เสียภาษี                    <span t-field="o.company_id.vat"/>
+                </span>
+            </div>           
+            <br/>
+
+            <div style="text-align:center;">
+                <h4><b>ใบเก็บสินค้า</b></h4>
+            </div>
+            <br/>
+
+            <div>
+                <h3 t-field="o.name"/>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <span>เลขที่การผลิต:</span><br/>
+                    <span t-field="o.origin"/>
+                </div>
+                <div class="col-4">
+                    <span>สถานะ:</span><br/>
+                    <span t-field="o.state"/>
+                </div>
+                <div class="col-4">
+                    <span>วันที่ครบกำหนด:</span><br/>
+                    <span t-esc="o.get_formatted_date(o.scheduled_date)"/>
+                </div>
+            </div>
+            <br/>
+
+        </div>
+
+        <div class="article">
+
+            <table style="
+                            font-size:14px; 
+                            text-align:center;
+                            width:100%;
+                            border:1px solid;
+                            ">
+                <thead>
+                    <tr style="border-bottom:1px solid;">
+                        <th style="padding-top:5px; padding-bottom:5px; border-right:1px solid; width:15%;">
+                            สินค้า</th>
+                        <th style="padding-top:5px; padding-bottom:5px; border-right:1px solid; width:30%;">
+                            รูปสินค้า</th>
+                        <th style="padding-top:5px; padding-bottom:5px; border-right:1px solid; width:10%;">
+                            ปริมาณ</th>
+                        <th style="padding-top:5px; padding-bottom:5px; border-right:1px solid; width:15%;">
+                            จาก</th>
+                        <th style="padding-top:5px; padding-bottom:5px; border-right:1px solid; width:15%;">
+                            ถึง</th>
+                        <th style="padding-top:5px; padding-bottom:5px; width:15%;">
+                            ล็อต/หมายเลขซีเรียล</th>
+                    </tr>   
+                </thead>
+                <tbody>
+                    <t t-foreach="o.move_line_ids_without_package" t-as="line">
+                        <tr style="border-bottom:1px solid;">
+                            <td style="padding-top:5px; padding-bottom:5px; padding-left:3px; padding-right:3px; border-right:1px solid;">
+                                <span t-field="line.product_id"/>
+                                </td>
+                            <td style="padding-top:5px; padding-bottom:5px; padding-left:3px; padding-right:3px; border-right:1px solid;">
+                                <t t-if="line.product_id.image_1920">
+                                    <img style="width:180px; height:150px;" t-att-src="image_data_uri(line.product_id.image_1920)" />
+                                </t>
+                                <t t-else="">
+                                    <span></span>
+                                </t>
+                                </td>
+                            <td style="padding-top:5px; padding-bottom:5px; padding-left:3px; padding-right:3px; border-right:1px solid;">
+                                <span t-field="line.qty_done"/>
+                                </td>
+                            <td style="padding-top:5px; padding-bottom:5px; padding-left:3px; padding-right:3px; border-right:1px solid;">
+                                <span t-field="line.location_id"/>
+                                </td>
+                            <td style="padding-top:5px; padding-bottom:5px; padding-left:3px; padding-right:3px; border-right:1px solid;">
+                                <span t-field="line.location_dest_id"/>
+                                </td>
+                            <td style="padding-top:5px; padding-bottom:5px; padding-left:5px; padding-right:5px;">
+                                <t t-if="line.lot_id">
+                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', line.lot_id.name, 400, 100)" style="width:100%;height:35px;" alt="Barcode"/>
+                                </t>
+                                </td>
+                        </tr>
+                    </t> 
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="footer" style="border-top:1px solid;">
+        </div>
+
+    </template> 
+
+
+    <template id="report_store_finished_product_th_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="navakij_report.report_store_finished_product_version_th_custom" />
+            </t>
+        </t>
+    </template>
+</odoo>

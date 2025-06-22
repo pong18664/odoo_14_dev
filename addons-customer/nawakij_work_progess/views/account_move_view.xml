@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit Form View -->
+    <record id="account_move_view_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.view.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- ปุ่ม smart button สำหรับ action พาไปที่ work progess -->
+            <xpath expr="//button[@name='open_reconcile_view']" position="after">
+                <button name="action_view_sale_order" type="object" class="oe_stat_button" icon="fa-inbox" attrs="{'invisible': [('count_sale_order', '=', 0)]}">   
+                    <field name="count_sale_order" string="Sale Order" widget="statinfo"/>
+                </button>
+                <button name="action_view_work_progess" type="object" class="oe_stat_button" icon="fa-inbox" attrs="{'invisible': [('count_work_progess', '=', 0)]}">   
+                    <field name="count_work_progess" string="Work Progess" widget="statinfo"/>
+                </button>
+            </xpath>
+
+            <!-- เพิ่ม field ref_work_progess ต่อจาก field payment_reference -->
+            <xpath expr="//field[@name='payment_reference']" position="after">
+                <field name="ref_work_progess" attrs="{'invisible': [('ref_work_progess', '=', False)]}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    
+</odoo>

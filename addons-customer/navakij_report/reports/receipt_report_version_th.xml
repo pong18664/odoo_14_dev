@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_receipt_version_th_custom">
+
+        <!-- ส่วนหัว -->
+        <div class="header" style="font-size:14px;">
+
+            <div class="row" style="width:100%; margin-left:0px;">
+                
+                <div class="col-2">
+                    <img style="width:125%;" t-att-src="image_data_uri(o.company_id.logo)" />
+                </div>
+               
+                <div class="col-8" style="text-align:center; padding-top: 20px;">
+                    <b style="font-size:24px;" t-field="o.company_id.name"/>
+                    <br/>
+                    <span t-field="o.company_id.street"/>
+                    <span t-field="o.company_id.zip"/>
+                    <br/>
+                    <span>โทรศัพท์ <span t-field="o.company_id.phone"/></span>
+                    <span t-field="o.company_id.email"/>
+                    <span>เลขประจำตัวผู้เสียภาษี <span t-field="o.company_id.vat"/></span>
+                </div>
+
+                <div class="col-2" style="text-align:center;">
+                    <span style="font-size:14;">หน้า                            
+                        <span style="margin-left:5px" class="page" />
+                        <span style="margin-left:5px"> ของ </span>
+                        <span style="margin-left:5px" class="topage" />
+                        <br/>
+                    </span>
+                    <br/>
+                    <t t-if="o.company_id.image">
+                        <img style="width:70%;" t-att-src="image_data_uri(o.company_id.image)" />
+                    </t>
+                </div>
+            </div>
+
+            <div class="row" style="width:100%; margin-left:0px;">
+                <div class="col-4"></div>
+                <div class="col-4" style="text-align:center; font-size:20px;">
+                    <b>ใบรับสินค้า</b>
+                </div>
+                <div class="col-4">
+                    <div class="row" style="width:100%; margin-left:0px;">
+                        <div class="col-6" style="padding-left:0px; padding-right:0px; text-align:right; ">
+                            <div class="col-12" style=" padding-top:4px; padding-bottom:5px; padding-left:0px;">
+                                <span >
+                                    <b>เลขที่เอกสาร</b>
+                                </span>
+                            </div>
+                            <div class="col-12" style=" padding-top:4px; padding-bottom:5px; padding-left:0px; ">
+                                <span >
+                                    <b>วันที่เอกสาร</b>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-6" style="padding-left:0px; padding-right:0px; text-align:left;">
+                            <div class="col-12" style="padding-top:5px; padding-bottom:5px; padding-left:3px; ">
+                                <span t-field="o.name"/>
+                            </div>
+                            <div class="col-12" style="padding-top:5px; padding-bottom:5px; padding-left:3px;">
+                                <span t-esc="o.get_formatted_date(o.date_done)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="width:100%; margin-left:0px; margin-top:3px; border-top:1px solid; border-bottom:1px solid;">
+
+                <div class="col-7">
+                    <span><b>ผู้ขาย : </b><span t-field="o.partner_id.name"/></span>
+                    <br/><br/>
+                    <span><b>ที่อยู่ : </b><span t-field="o.partner_id.street"/>
+                    <span t-field="o.partner_id.street2"/>
+                    <span t-field="o.partner_id.city"/>
+                    <span t-field="o.partner_id.state_id.name"/>
+                    <span t-field="o.partner_id.zip"/>
+                    </span>
+                    <br/>
+                    <span>
+                        <b>โทรศัพท์.</b>
+                        <t t-if="o.partner_id.phone">
+                            <span t-esc="o.partner_id.phone.replace('+66','0')"/>
+                        </t>
+                        <b style="margin-left:20px;">โทรสาร.</b>
+                        <t t-if="o.partner_id.phone">
+                            <span t-esc="o.partner_id.phone.replace('+66','0')"/>
+                        </t>
+                    </span>
+                </div>
+
+                <div class="col-5">
+                    <span><b>เลขที่ใบสั่งซื้อ :</b> <span t-field="o.origin"/></span>
+                    <br/>
+                    <span><b>หมายเหตุ :</b></span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ส่วนกลาง -->
+        <div class="article">
+            <!-- table -->
+            <table style="
+                            font-size:14px; 
+                            text-align:center;
+                            width:100%;
+                            ">
+                <thead>
+                    <tr style="font-size:16px;">
+                        <th style="padding-top:4px; padding-bottom:4px; width:3%;">
+                            <b>ลำดับ</b>
+                        </th>
+                        <th style="padding-top:4px; padding-bottom:4px; width:28%;">
+                            <b>สินค้า</b>
+                        </th>
+                        <th style="padding-top:4px; padding-bottom:4px; width:28%;">
+                            <b>คำอธิบาย</b>
+                        </th>
+                        <th style="padding-top:4px; padding-bottom:4px; width:21%;">
+                            <b>รูปสินค้า</b>
+                        </th>
+                        <th style="padding-top:4px; padding-bottom:4px; width:10%;">
+                            <b>ปริมาณที่ต้องรับ</b>
+                        </th>
+                        <th style="padding-top:4px; padding-bottom:4px; width:10%;">
+                            <b>ปริมาณ หน่วย</b>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody style="text-align:right">
+                    <t t-set="count" t-value="0"/>
+                    <t t-foreach="o.move_ids_without_package" t-as="line">
+                        <t t-set="count" t-value="count + 1"/>
+                        <tr>
+                            <td style="text-align:center;">
+                                <span t-esc="count"/>
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.product_id"/>
+                            </td>
+                            <td style="text-align:center;">
+                                <!-- <span t-field="line.product_id"/> -->
+                                No information
+                            </td>
+                            <td>
+                                <t t-if="line.product_id.image_1920">
+                                    <img style="width:100px; height:50px;" t-att-src="image_data_uri(line.product_id.image_1920)" />
+                                </t>
+                                <t t-else="">
+                                    <span></span>
+                                </t>
+                            </td>   
+                            <td style="text-align:center;">
+                                <span t-field="line.product_uom_qty"/>
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.quantity_done"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ส่วนท้าย -->
+        <div class="footer" style="font-size:14px;">
+            
+            <div class="row" style="margin-left:0px; margin-right:0px; padding-top:50px;">
+
+                <div class="col-6" style="text-align:center;">
+                    <span>
+                    __________________________________________<br/>
+                    ผู้ส่งสินค้า
+                    </span>
+                </div>
+
+                <!-- <div class="col-4" style="text-align:center;">
+                    <span>
+                    __________________________________________<br/>
+                    ผู้ตรวจสอบ
+                    </span>
+                </div> -->
+
+                <div class="col-6" style="text-align:center;">
+                    <span>
+                    __________________________________________<br/>
+                    ผู้รับสินค้า
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+
+
+    <template id="report_receipt_th_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="navakij_report.report_receipt_version_th_custom" />
+            </t>
+        </t>
+    </template>
+</odoo>

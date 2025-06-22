@@ -1,0 +1,12 @@
+
+table th {
+    text-align: center;
+    white-space: normal !important; /* อนุญาตให้ข้อความขึ้นบรรทัดใหม่ */
+}
+
+table td {
+    white-space: normal !important; /* อนุญาตให้ข้อความขึ้นบรรทัดใหม่ */
+}
+
+
+

@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_payment_receipt_th_dummy_custom"> 
+
+        <!-- ส่วนหัว -->
+        <div class="header" style="font-size:14px;">
+            <!-- เพิ่มการอ้างอิงไฟล์ CSS -->
+            <link rel="stylesheet" href="/navakij_report/static/src/css/payment_receipt_th.css"/>
+
+            
+            <!-- class row -->
+            <div class="row" style="width:100%; margin-left:0px;">
+
+                <div class="col-2" style="padding-top:10px;">
+                    <img style="width:100%;" t-att-src="image_data_uri(o.company_id.logo)" />
+                </div>
+
+                <div class="col-8" style="text-align:center; padding-top:10px;">
+                    <b style="font-size:24px;" t-field="o.company_id.name"/>
+                    <br/>
+                    <b style="font-size:22px;" t-field="o.company_id.name_company_eng"/>
+                    <br/>
+                </div>
+
+                <div class="col-2">
+                    <div style="text-align:right; margin-right:2px;">
+                        <span style="font-size:14;">หน้า                            
+                            <span style="margin-left:5px" class="page" />
+                            <span style="margin-left:5px"> ของ </span>
+                            <span style="margin-left:5px" class="topage" />
+                            <br/>
+                        </span>
+                    </div>
+                    <div>
+                        <t t-if="o.company_id.image">
+                            <img style="width:100%;" t-att-src="image_data_uri(o.company_id.image)" />
+                        </t>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- class address_company ที่อยู่บริษัท -->
+            <div class="address_company" style="text-align:center; font-size:14;">
+                <span t-field="o.company_id.street"/>
+                <span t-field="o.company_id.zip"/>
+                <br/>
+                <span t-field="o.company_id.street_eng"/>
+                <span t-field="o.company_id.zip"/>
+                <br/>
+                <span>โทร<span style="margin-left:5px;" t-field="o.company_id.phone"/>
+                <span t-field="o.company_id.email"/>
+                เลขประจำตัวผู้เสียภาษี<span style="margin-left:5px;" t-field="o.company_id.vat"/>
+                </span>
+                <br/>
+                <span>Tel.<span style="margin-left:5px;" t-field="o.company_id.phone"/>
+                <span t-field="o.company_id.email"/>
+                TAX ID.<span style="margin-left:5px;" t-field="o.company_id.vat"/>
+                </span>
+                <br/>
+                <br/>
+                <b style="font-size:20px;">ใบเสร็จรับเงิน</b>
+            </div>
+            <br/>
+            <br/>
+
+            <div class="row" style="width: 870px;
+                                    min-width: 870px;
+                                    max-width: 870px;
+                                    margin-left: 0px;
+                                    margin-top: 2px;">
+                <div class="div-left">
+                    <table class="table-left">
+                        <t t-set="partner_name" t-value="o.partner_id.name.split('สาขาที่')"/>
+                        <tbody>
+                            <tr>
+                                <td><b>ชื่อลูกหนี้</b></td>
+                                <td rowspan="2">
+                                    <t t-if="o.partner_id.parent_id">
+                                        <span t-esc="partner_name[0]"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="o.partner_id.name"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>สาขา</b></td>
+                                <td>
+                                    <t t-if="o.partner_id.parent_id">
+                                        <span>สาขาที่ <span t-esc="partner_name[1]"/></span>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-if="o.partner_id.company_type == 'company'">
+                                            <span>สำนักงานใหญ่</span>
+                                        </t> 
+                                        <t t-else="">
+                                            <span></span>
+                                        </t>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <b>เลขประจำตัวผู้เสียภาษี</b>
+                                    <span style="margin-left:4px;" t-field="o.partner_id.vat"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <b>ที่อยู่</b>
+                                    <span style="margin-left:4px;" t-field="o.partner_id.street"/>
+                                    <span t-field="o.partner_id.street2"/>
+                                    <span t-field="o.partner_id.city"/>
+                                    <span t-field="o.partner_id.state_id.name"/>
+                                    <span t-field="o.partner_id.zip"/>                           
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>โทร</b></td>
+                                <td>
+                                    <t t-if="o.partner_id.phone">
+                                        <span t-esc="o.partner_id.phone.replace('+66 ','0')"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span>-</span>
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="div-right">
+                    <table class="table-right">
+                        <tbody>
+                            <tr>
+                                <td rowspan="3"><b>เลขที่</b></td>
+                                <td>
+                                    <span t-field="o.payment_dummy_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>วันที่</b></td>
+                                <td>
+                                    <span t-field="o.payment_dummy_id.payment_date"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ส่วนกลาง -->
+        <div class="article">
+            <!-- เพิ่มการอ้างอิงไฟล์ CSS -->
+            <link rel="stylesheet" href="/navakij_report/static/src/css/payment_receipt_th.css"/>
+
+            <!-- table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <b>ลำดับ</b>
+                        </th>
+                        <th>
+                            <b>รายการ</b>
+                        </th>
+                        <th>
+                            <b>จำนวนเงิน</b>
+                        </th>
+                        <th>
+                            <b>ยอดคงค้าง</b>
+                        </th>
+                        <th>
+                            <b>ยอดชำระ</b>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-set="count" t-value="1"/>
+                    <tr>
+                        <td><span t-esc="count"/></td>
+                        <td>
+                            <span>ได้รับเงินตามเอกสารเลขที่</span>
+                            <span style="margin-left:5px;" t-field="o.payment_dummy_id.tax_invoice_number"/>
+                            <span style="margin-left:5px;">ลงวันที่</span>
+                            <span style="margin-left:5px;" t-esc="o.get_formatted_date(o.payment_dummy_id.tax_invoice_date)"/>
+                        </td>
+                        <td>
+                            <span t-field="o.net_total"/>
+                        </td>
+                        <td>
+                            <span t-esc="'{0:,.2f} ฿'.format(o.payment_dummy_id.amount_due + o.payment_dummy_id.amount)"/>
+                        </td>
+                        <td>
+                            <span t-field="o.payment_dummy_id.amount"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ส่วนท้าย -->
+        <div class="footer" style="font-size:14px;">
+            <!-- เพิ่มการอ้างอิงไฟล์ CSS -->
+            <link rel="stylesheet" href="/navakij_report/static/src/css/payment_receipt_th.css"/>
+
+            <table class="number_1">
+                <tr>
+                    <td>หมายเหตุ</td>
+                    <td colspan="3" rowspan="4"></td>
+                </tr>
+                <tr>
+                    <td><span style="color:white;">.</span></td>
+                </tr>
+                <tr>
+                    <td><span style="color:white;">.</span></td>
+                </tr>
+                <tr>
+                    <td><span style="color:white;">.</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span>
+                            <t t-set="amount_to_text" t-value="o.currency_id.with_context({'lang': 'th_TH'}).amount_to_text(o.payment_dummy_id.amount)" />
+                            <t t-set="amount_split" t-value="amount_to_text.split(' ')" />
+                            <t t-if="len(amount_split) &gt; 2">
+                                <t t-set="amount_text_thai" t-value="''.join([amount_split[0], 'บาท', amount_split[3], 'สตางค์'])" />
+                            </t>
+                            <t t-else="">
+                                <t t-set="amount_text_thai" t-value="''.join([amount_split[0]])" />
+                            </t>
+                            <span style="margin-left:3px;" t-esc=" ''+ amount_text_thai +'' " />
+                        </span>
+                    </td>
+                    <td><span>จำนวนเงินทั้งสิ้น</span></td>
+                    <td>
+                        <span t-field="o.payment_dummy_id.amount"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span>กรณีที่ชำระเป็นเช็คใบเสร็จรับเงินฉบับนี้จะสมบูรณ์ก็ต่อเมื่อบริษัทเรียกเก็บเงินจากธนาคารได้แล้ว</span>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="row">
+                <div class="div_footer_first">
+                    <table class="number_2">
+                        <tr>
+                            <td><span>ในนาม สำนักงานใหญ่</span></td>
+                        </tr>
+                        <tr>
+                            <td><span style="color:white;">.</span></td>
+                        </tr>
+                        <tr>
+                            <td><span style="color:white;">.</span></td>
+                        </tr>
+                        <tr>
+                            <td><span style="color:white;">.</span></td>
+                        </tr>
+                        <tr>
+                            <td><span style="color:white;">.</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>________________________________________</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>ผู้มีอำนาจลงนาม</span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="div_footer_second">
+                    <table class="number_3">
+                        <tr>
+                            <td><span style="color:white;">.</span></td>
+                        </tr>
+                        <tr>
+                            <td><span style="color:white;">.</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>จัดเตรียมโดย</span>
+                                <span>________________________________</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span style="color:white;">.</span></td>
+                        </tr>
+                        <tr>
+                            <td><span style="color:white;">.</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>ตรวจสอบโดย</span>
+                                <span>________________________________</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span style="color:white;">.</span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="div_footer_third">
+                    <table class="number_4">
+                        <tr>
+                            <td><span>ชำระโดย</span></td>
+                            <td>
+                                <span style="color:white; border:1px black solid; margin-left:30px;">.......</span>
+                                <span style="margin-left:10px;">เงินสด</span>
+                                <span style="margin-left:20px; color:white; border:1px black solid;">.......</span>
+                                <span style="margin-left:10px;">เช็ค</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><span style="color:white;">.</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>ธนาคาร</span></td>
+                            <td>
+                                <span>......................................................................</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><span style="color:white;">.</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>เลขที่</span></td>
+                            <td>
+                                <span>.............................</span>
+                                <span>วันที่</span>
+                                <span>.............................</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><span style="color:white;">.</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>ผู้รับเงิน</span></td>
+                            <td>
+                                <span>......................................................................</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </template>
+
+
+    <template id="template_payment_receipt_report_dummy">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="nawakij_dummy_report.report_payment_receipt_th_dummy_custom" />
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit Form View -->
+    <record id="sale_order_view_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- เพิ่ม field source_document ต่อจาก field payment_term_id -->
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="source_document" attrs="{'invisible': [('source_document', '=', False)]}"/>
+            </xpath>
+            
+            <!-- เพิ่ม field work_progess_value ต่อจาก field tax_id ที่อยู่ใน order_line -->
+            <xpath expr="//field[@name='order_line']//tree/field[@name='tax_id']" position="after"> 
+                <field name="work_progess_value"/>
+            </xpath>
+
+            <!-- 
+            เพิ่ม smart button name'action_view_work_progess' และ smart button name'action_view_config_work_progess_project'
+            ต่อจาก smart button name'action_view_invoice'
+            -->
+            <xpath expr="//button[@name='action_view_invoice']" position="after">
+                <button name="action_view_work_progess" type="object" class="oe_stat_button" icon="fa-inbox" attrs="{'invisible': [('count_work_progess', '=', 0)]}">   
+                    <field name="count_work_progess" string="Work Progess" widget="statinfo"/>
+                </button>
+                <button name="action_view_config_work_progess_project" type="object" class="oe_stat_button" icon="fa-inbox" attrs="{'invisible': [('count_config_work_progess_project', '=', 0)]}">   
+                    <field name="count_config_work_progess_project" string="Project Configuration" widget="statinfo"/>
+                </button>
+            </xpath>
+            <!-- เพิ่มปุ่ม smart button 'Invoice' -->
+            <xpath expr="//button[@name='preview_sale_order']" position="before">
+                <button name="action_view_account_move" type="object" class="oe_stat_button" icon="fa-inbox" attrs="{'invisible': [('count_invoice', '=', 0)]}">   
+                    <field name="count_invoice" string="Invoice" widget="statinfo"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    
+</odoo>

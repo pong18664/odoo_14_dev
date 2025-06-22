@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_work_progess,access.work.progess,model_work_progess,,1,1,1,1
+access_work_progess_line,access.work.progess.line,model_work_progess_line,,1,1,1,1
+access_work_progess_group_type_line,access.work.progess.group.type.line,model_work_progess_group_type_line,,1,1,1,1
+access_configuration_work_progess_type,access.configuration.work.progess.type,model_configuration_work_progess_type,,1,1,1,1
+access_configuration_work_progess_project,access.configuration.work.progess.project,model_configuration_work_progess_project,,1,1,1,1
+access_configuration_work_progess_project_line,access.configuration.work.progess.project.line,model_configuration_work_progess_project_line,,1,1,1,1
+access_work_progess_project,access.work.progess.project,model_work_progess_project,,1,1,1,1
+access_work_progess_project_line,access.work.progess.project.line,model_work_progess_project_line,,1,1,1,1
+access_work_progess_wizard,access.work.progess.wizard,model_work_progess_wizard,,1,1,1,1
+access_work_progess_line_wizard,access.work.progess.line.wizard,model_work_progess_line_wizard,,1,1,1,1

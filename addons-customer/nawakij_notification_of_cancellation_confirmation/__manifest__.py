@@ -1,0 +1,25 @@
+{
+    "name": "nawakij notification of cancellation confirmation",
+    "summary": "nawakij",
+    "version": "14.0",
+    "author": "I C E Solutions",
+    "category": "test",
+    "license": "AGPL-3",
+    "depends": [
+        "sale",
+        "stock",
+        "product",
+        "account",
+        "purchase",
+        "purchase_requisition_stock",
+        "purchase_requisition",
+    ],
+    "data": [
+        "security/ir.model.access.csv",
+        "wizard/sale_order_cancel.xml",
+        "wizard/purchase_order_cancel.xml",
+        "wizard/manufacturing_order_cancel.xml",
+   ],
+    "installable": True,
+    'application': True,
+}

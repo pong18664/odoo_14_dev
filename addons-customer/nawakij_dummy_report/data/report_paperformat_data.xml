@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <!-- dummy invoice report th -->
+    <record id="dummy_invoice_report_paperformat" model="report.paperformat">
+        <field name="name">invoice dummy A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">130</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">123</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- dummy billing note report th -->
+    <record id="dummy_billing_note_report_paperformat" model="report.paperformat">
+        <field name="name">billing note dummy A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">130</field>
+        <field name="margin_bottom">80</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">123</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- dummy payment receipt report th -->
+    <record id="dummy_payment_receipt_paperformat" model="report.paperformat">
+        <field name="name">payment receipt dummy A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">115</field>
+        <field name="margin_bottom">80</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">108</field>
+        <field name="dpi">90</field>
+    </record>
+
+</odoo>

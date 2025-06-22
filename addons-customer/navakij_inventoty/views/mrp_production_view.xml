@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mrp_production_form" model="ir.ui.view">
+        <field name="name">mrp.production.form</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_raw_ids']/tree//field[@name='forecast_availability']" position="before">
+                <field name='consume_per_unit' />
+            </xpath>
+            <xpath expr="//page[@name='components']" position="before">
+                <field name="check_operation_type" invisible="1"/>
+                <page string="Operations2" name="operations2" attrs="{'invisible':[('check_operation_type', '!=', 'mrp_operation')]}">
+                    <field name='stock_move_line_ids' widget="one2many" mode="tree,kanban" >
+                        <tree editable="bottom" >
+                            <field name="company_id" invisible="1"/>
+                            <field name="move_id" invisible="1"/>
+                            <field name="picking_id" invisible="1"/>
+                            <field name="product_uom_category_id" invisible="1"/>
+                            <field name='reference'/>
+                            <field name='product_id'  required="1"/>
+                            <field name="lot_id" />
+                            <field name="lots_visible" invisible="1"/>
+                            <field name='product_uom_qty' string='Demand' invisible="1"/>
+                            <field name='qty_done' default='1'/>
+                            <field name='consume_per_unit' string='Consume Per Unit'/>
+                            <field name='product_uom_id'/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_mrp_production_tree_inherit" model="ir.ui.view">
+        <field name="name">mrp.production.tree.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="date_planned_start" position="attributes">
+                <attribute name="widget">date</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

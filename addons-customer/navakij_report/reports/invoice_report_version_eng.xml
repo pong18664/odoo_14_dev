@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_invoice_version_eng_custom">
+
+        <!-- ส่วนหัว -->
+        <div class="header" style="font-size:14px;">
+            <!-- เพิ่มการอ้างอิงไฟล์ CSS -->
+            <link rel="stylesheet" href="/navakij_report/static/src/css/invoice_report_style_eng.css"/>
+
+            <!-- class row -->
+            <div class="row" style="width:100%; margin-left:0px;">
+                <!-- col ที่ 1 -->
+                <div class="col-2" style="width:150px; max-width:150px; min-width:150px; padding-top:10px;">
+                    <img style="width:100%;" t-att-src="image_data_uri(o.company_id.logo)" />
+                </div>
+                <!-- col ที่ 2 -->
+                <div class="col-8" style="padding-top:80px; padding-right:0px; text-align:right; width:540px; max-width:540px; min-width:540px;">
+                    <b style="font-size:22px;" t-field="o.company_id.name_company_eng"/>
+                    <br/>
+                </div>
+                <!-- col ที่ 3 -->
+                <div class="col-2" style="width:180px; max-width:180px; min-width:180px;">
+                    <div class="col" style="text-align:right; margin-right:2px;">
+                        <span style="font-size:14;">Page                            
+                            <span style="margin-left:5px" class="page" />
+                            <span style="margin-left:5px"> of </span>
+                            <span style="margin-left:5px" class="topage" />
+                            <br/>
+                        </span>
+                    </div>
+                    <div class="col" style="width:150px; max-width:150px; min-width:150px;">
+                        <t t-if="o.company_id.image">    
+                            <img style="width:100%;" t-att-src="image_data_uri(o.company_id.image)" />
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; font-size:14;">
+                <span t-field="o.company_id.street_eng"/>
+                <span t-field="o.company_id.street2_eng"/>
+                <span t-field="o.company_id.city_eng"/>
+                <span t-field="o.company_id.zip"/>
+                <br/>
+                <span>Tel.<span t-field="o.company_id.phone"/>
+                    <span t-field="o.company_id.email"/>
+                TAXID<span t-field="o.company_id.vat"/>
+                </span>
+                <br/>
+                <br/>
+                <b style="font-size:20px;">Invoice</b> 
+            </div>
+
+            <!-- class row -->
+            <div class="row" style="width:100%; margin-left:0px;">
+                <!-- col ที่ 1 -->
+                <div class="col-8" style="padding-top:45px; padding-left:3px;">
+                    <!-- <span >
+                        <b>Customer account:</b>
+                        <span t-field="o.partner_id.ref"/>
+                    </span> -->
+                </div>
+                <!-- col ที่ 2 -->
+                <div class="col-2" style="border:1px solid; padding-left:0px; padding-right:0px; text-align:right; ">
+                    <div class="col-12" style=" padding-top:4px; padding-bottom:5px; padding-right:3px; border-bottom:1px solid; ">
+                        <span >
+                            <b>Doc. No.</b>
+                        </span>
+                    </div>
+                    <div class="col-12" style=" padding-top:4px; padding-bottom:5px; padding-right:3px; ">
+                        <span >
+                            <b>Doc. Date</b>
+                        </span>
+                    </div>
+                </div>
+                <!-- col ที่ 3 -->
+                <div class="col-2" style="border:1px solid; padding-left:0px; padding-right:0px; text-align:left;">
+                    <div class="col-12" style="padding-top:5px; padding-bottom:5px; padding-left:3px; border-bottom:1px solid;">
+                        <span t-field="o.name"/>
+                    </div>
+                    <div class="col-12" style="padding-top:5px; padding-bottom:5px; padding-left:3px;">
+                        <span t-esc="o.get_formatted_date(o.invoice_date)"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- table-left and table-right -->
+            <div class="row" style="width:870px; margin-left:0px; margin-top:2px;">
+                <div style="border:1px solid; width:432px; height:200px; height-max:200px; height-min:200px;">
+                    <table class="table-left">
+                        <tbody>
+                            <tr>
+                                <td><b>Name</b></td>
+                                <td rowspan="2">
+                                    <t t-if="o.partner_id.parent_id">
+                                        <span t-field="o.partner_id.parent_id"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="o.partner_id.name"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>Branch</b></td>
+                                <td>
+                                    <t t-if="o.partner_id.parent_id">
+                                        <span t-field="o.partner_id.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span>Head Office</span>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <b>Tax ID.</b>
+                                    <span style="margin-left:4px;" t-field="o.partner_id.vat"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <b>Addr.</b>
+                                    <span style="margin-left:4px;" t-field="o.partner_id.street"/>
+                                    <span t-field="o.partner_id.street2"/>
+                                    <span t-field="o.partner_id.city"/>
+                                    <span t-field="o.partner_id.state_id.name"/>
+                                    <span t-field="o.partner_id.zip"/>                           
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>Tel.</b></td>
+                                <td>
+                                    <t t-if="o.partner_id.phone">
+                                        <span t-esc="o.partner_id.phone.replace('+66 ','0')"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span>-</span>
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="border:1px solid; width:432px; margin-left:6px;">
+                    <table class="table-right">
+                        <tbody>
+                            <tr>
+                                <td><b>Project</b></td>
+                                <td rowspan="2"><span t-field="o.analytic_account_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>Contact</b></td>
+                                <td rowspan="2">
+                                    <t t-if="o.partner_id.contact">
+                                        <span t-field="o.partner_id.contact"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span>-</span>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>Cont. Mob.</b></td>
+                                <td rowspan="2">
+                                    <t t-if="o.partner_id.contact_mobile">
+                                        <span t-field="o.partner_id.contact_mobile"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span>-</span>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- table class number_po -->
+            <table class="number_po">
+                <tr>
+                    <thead>
+                        <th>PO No./Contract No.</th>
+                        <th>Prepayment No.</th>
+                        <th>Credit</th>
+                        <th>Due Date</th>
+                    </thead>
+                </tr>
+                <tr>
+                    <tbody>
+                        <td>
+                            <t t-if="o.po_no">
+                                <span t-field="o.po_no"/>
+                            </t>
+                            <t t-else="">
+                                <span style="color:white;">.</span> 
+                            </t>
+                        </td>
+                        <td>
+                            <t t-if="o.advance_no">
+                                <span t-field="o.advance_no"/>
+                            </t>
+                            <t t-else="">
+                                <span style="color:white;">.</span>
+                            </t>
+                        </td>
+                        <td>
+                            <t t-if="o.invoice_payment_term_id">
+                                <span t-field="o.invoice_payment_term_id.name"/>
+                            </t>
+                            <t t-else="">
+                                <span style="color:white;">.</span>
+                            </t>
+                        </td>
+                        <td>
+                            <t t-if="o.invoice_date_due">
+                                <span t-esc="o.get_formatted_date(o.invoice_date_due)"/>
+                            </t>
+                            <t t-else="">
+                                <span style="color:white;">.</span>
+                            </t>
+                        </td>
+                    </tbody>
+                </tr>
+            </table>
+
+        </div>
+
+        <!-- ส่วนกลาง -->
+        <div class="article">
+            <!-- เพิ่มการอ้างอิงไฟล์ CSS -->
+            <link rel="stylesheet" href="/navakij_report/static/src/css/invoice_report_style_eng.css"/>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <b>No.</b>
+                        </th>
+                        <th>
+                            <b>Item number</b>
+                        </th>
+                        <th>
+                            <b>Item</b>
+                        </th>
+                        <th>
+                            <b>Qty.</b>
+                        </th>
+                        <th>
+                            <b>Unit</b>
+                        </th>
+                        <th>
+                            <b>Price/Unit</b>
+                        </th>
+                        <th>
+                            <b>Discount</b>
+                        </th>
+                        <th>
+                            <b>Amount(THB)</b>
+                        </th>
+                    </tr>
+                </thead>
+
+                <t t-if="o.inv">
+                    <tbody>
+                        <t t-set="count" t-value="0"/>
+                        <t t-set="lines_without_product" t-value="o.get_lines_without_product_id()" />
+                        <t t-foreach="lines_without_product" t-as="line">
+                            <t t-set="count" t-value="count + 1"/>
+                            <tr>
+                                <td>
+                                    <span t-esc="count"/>
+                                </td>
+                                <td>
+                                    <!-- ส่วนของรหัสสินค้า -->
+                                </td>
+                                <td>
+                                    <span t-esc="line['name']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="'{0:,.2f}'.format(line['quantity'])"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['uom']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="'{0:,.2f}'.format(line['price_unit'])"/>
+                                </td>
+                                <td>
+                                    <!-- ช่องส่วนลด -->
+                                </td>
+                                <td>
+                                    <span t-esc="'{0:,.2f}'.format(line['price_subtotal'])"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </t>
+
+                <t t-else="">
+                    <tbody>
+                        <t t-set="count" t-value="0"/>
+                        <t t-set="invoice_line" t-value="o.sort_item_lines_by_sequence()"/>
+                        <t t-foreach="invoice_line" t-as="line">
+                            <t t-set="count" t-value="count + 1"/>
+                            <tr>
+                                <td>
+                                    <span t-esc="count"/>
+                                </td>
+                                <td>
+                                    <t t-if="line.product_id">
+                                        <span t-esc="line.product_id.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-esc="line.name"/>
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="line.product_id">
+                                        <span t-esc="line.product_id.default_code"/>
+                                    </t>
+                                </td>
+                                <td>
+                                    <span t-esc="'{0:,.2f}'.format(line.quantity)"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line.product_uom_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                </td>
+                                <td>
+                                    <!-- ช่องส่วนลด -->
+                                </td>
+                                <td>
+                                    <span t-esc="'{0:,.2f}'.format(line.price_subtotal)"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </t>
+            </table>
+        </div>
+
+        <!-- ส่วนท้าย -->
+        <div class="footer">
+            <!-- เพิ่มการอ้างอิงไฟล์ CSS -->
+            <link rel="stylesheet" href="/navakij_report/static/src/css/invoice_report_style_eng.css"/>
+
+            <table >
+                <tbody>
+                    <tr>
+                        <td rowspan="5">
+                            <span><b>Remark:</b></span>
+                            <span t-field="o.narration"/>
+                        </td>
+                        <td>
+                            <span><b>Amount</b></span>
+                        </td>
+                        <td>
+                            <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span><b>VAT 7%</b></span>
+                        </td>
+                        <td>
+                            <span t-esc="'{0:,.2f}'.format(o.amount_tax)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span><b>Net amount</b></span>
+                        </td>
+                        <td>
+                            <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span><b>Retention</b></span>
+                        </td>
+                        <td>
+                            <span t-esc="'{0:,.2f}'.format(o.retention)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span><b>WHT</b></span>
+                        </td>
+                        <td>
+                            <span t-esc="'{0:,.2f}'.format(o.wht)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>
+                                <t t-set="amount_to_text_eng" t-value="o.currency_id.with_context(lang='en_US').amount_to_text(o.amount_total)" />
+                                <t t-esc="amount_to_text_eng" />
+                            </span>
+                        </td>
+                        <td>
+                            <span><b>Net total</b></span>
+                        </td>
+                        <td>
+                            <span t-esc="'{0:,.2f}'.format(o.net_total)"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row" style="margin-left:0px; margin-right:0px; margin-top:80px;">
+
+                <!-- col ที่ 1 -->
+                <div class="col-6" style="text-align:center;">
+                    <span>
+                    __________________________________________<br/>
+                    Billed By
+                    </span>
+                </div>
+
+                <!-- col ที่ 2 -->
+                <div class="col-6" style="text-align:center;">
+                    <span>
+                    __________________________________________<br/>
+                    Received By
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+
+
+    <template id="report_invoice_eng_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="navakij_report.report_invoice_version_eng_custom" />
+            </t>
+        </t>
+    </template>
+</odoo>

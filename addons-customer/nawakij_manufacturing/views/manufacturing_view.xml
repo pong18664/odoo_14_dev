@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="manufacturing_inherit" model="ir.ui.view">
+        <field name="name">mrp.production.form</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_view_mo_delivery']" position="after">
+                <button name="action_view_vendor_bill" type="object" class="oe_stat_button" icon="fa-inbox" attrs="{'invisible': [('vendor_bill_count', '=', 0)]}">   
+                    <field name="vendor_bill_count" string="Vendor Bill" widget="statinfo"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//button[@name='button_unbuild']" position="after">
+                <button string="Create Bill" name="new_create_vendor_bill" type="object" attrs="{'invisible': [('show_button_create_bill', '!=', True)]}"/>
+                <field name="show_button_create_bill" invisible="1"/>
+            </xpath> 
+        
+        </field>
+    </record>
+
+</odoo>

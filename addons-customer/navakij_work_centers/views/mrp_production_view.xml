@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="mrp.mrp_production_workorder_tree_editable_view">
+        <field name="name">mrp.production.work.order.tree.editable</field>
+        <field name="model">mrp.workorder</field>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="consumption" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+                <field name="is_produced" invisible="1"/>
+                <field name="is_user_working" invisible="1"/>
+                <field name="product_uom_id" invisible="1" readonly="0"/>
+                <field name="production_state" invisible="1"/>
+                <field name="production_bom_id" invisible="1"/>
+                <field name="qty_producing" invisible="1"/>
+                <field name="time_ids" invisible="1"/>
+                <field name="working_state" invisible="1"/>
+                <field name="operation_id" invisible="1" domain="['|', ('bom_id', '=', production_bom_id), ('bom_id', '=', False)]" context="{'default_workcenter_id': workcenter_id, 'default_company_id': company_id}"/>
+                <field name="name" string="Operation test"/>
+                <field name="workcenter_id"/>
+                <field name="date_planned_start" optional="show"/>
+                <field name="date_planned_finished" optional="hide"/>
+                <field name="date_start" optional="hide" readonly="1"/>
+                <field name="date_finished" optional="hide" readonly="1"/>
+                <field name="duration_expected" widget="float_time"/>
+                <field name="duration" widget="mrp_time_counter"
+                  attrs="{'invisible': [('production_state','=', 'draft')], 'readonly': [('is_user_working', '=', True)]}"/>
+                <!-- เพิ่ม column subcontract_cost -->
+                <field name="subcontract_cost" attrs="{'readonly': [('check_yes_or_no', '!=', True)]}" />
+                <!-- เพิ่ม field check_yes_or_no ไว้เพื่อเช็ค readonly ให้กับ subcontract_cost -->
+                <field name="check_yes_or_no" invisible="1"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state not in ('done', 'cancel')" attrs="{'invisible': [('production_state', 'in', ('draft', 'done'))]}"/>
+                <button name="button_start" type="object" string="Start" class="btn-success"
+                  attrs="{'invisible': ['|', '|', '|', ('production_state','in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked'), ('state', '=', 'done'), ('is_user_working', '!=', False)]}"/>
+                <button name="button_pending" type="object" string="Pause" class="btn-warning"
+                  attrs="{'invisible': ['|', '|', ('production_state', 'in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked'), ('is_user_working', '=', False)]}"/>
+                <button name="button_finish" type="object" string="Done" class="btn-success"
+                  attrs="{'invisible': ['|', '|', ('production_state', 'in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked'), ('is_user_working', '=', False)]}"/>
+                <button name="%(mrp.act_mrp_block_workcenter_wo)d" type="action" string="Block" context="{'default_workcenter_id': workcenter_id}" class="btn-danger"
+                  attrs="{'invisible': ['|', ('production_state', 'in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked')]}"/>
+                <button name="button_unblock" type="object" string="Unblock" context="{'default_workcenter_id': workcenter_id}" class="btn-danger"
+                  attrs="{'invisible': ['|', ('production_state', 'in', ('draft', 'done', 'cancel')), ('working_state', '!=', 'blocked')]}"/>
+                <button name="action_open_wizard" type="object" icon="fa-external-link" class="oe_edit_only"
+                    context="{'default_workcenter_id': workcenter_id}"/>
+                <field name="show_json_popover" invisible="1"/>
+                <field name="json_popover" widget="mrp_workorder_popover" string=" " width="0.1" attrs="{'invisible': [('show_json_popover', '=', False)]}"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="inherit_view_button_mark_as_done" model="ir.ui.view">
+      <field name="name">mrp.production.form.button.inherit</field>
+      <field name="model">mrp.production</field>
+      <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='reservation_state']" position="after">
+            <field name="check_state" invisible="1"/>
+          </xpath>
+          <!-- แก้ไขเเงื่อนไขการแสดงปุ่ม mark as done-->
+          <xpath expr="//button[@name='button_mark_done'][2]" position="attributes">
+            <attribute name="attrs">{'invisible': [('check_state', 'not in', [True])]}</attribute>
+          </xpath>
+          <!-- แก้ไขเเงื่อนไขการแสดงปุ่ม validate-->
+          <xpath expr="//button[@name='button_mark_done'][1]" position="attributes">
+            <attribute name="attrs">{'invisible': [('check_state', 'not in', [True])]}</attribute>
+          </xpath>
+      </field>
+    </record>
+    
+</odoo>

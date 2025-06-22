@@ -1,0 +1,28 @@
+{
+    "name": "nawakij work progess",
+    "summary": "nawakij",
+    "version": "14.0",
+    "author": "Ashva",
+    "category": "work progess",
+    "license": "AGPL-3",
+    "depends": [
+        "sale",
+        "stock",
+        "product",
+        "account",
+    ],
+    "data": [
+        'security/ir.model.access.csv',
+        'views/work_progess_view.xml',
+        'views/work_progess_project_view.xml',
+        'views/configuration_work_progess_type_view.xml',
+        'views/configuration_work_progess_project_view.xml',
+        'views/sale_order_view.xml',
+        'views/account_move_view.xml',
+        'views/product_template_view.xml',
+        'wizard/work_progess_wizard_view.xml',
+    ],
+    'images': ['static/description/icon.png'],
+    "installable": True,
+    'application': True,
+}

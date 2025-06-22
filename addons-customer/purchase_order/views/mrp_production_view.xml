@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mrp_production_form" model="ir.ui.view">
+        <field name="name">mrp.production.form</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_mo_delivery']" position="after">
+                <button name="action_view_purchase_agreements" type="object" class="oe_stat_button" icon="fa-inbox" attrs="{'invisible': [('purchase_agreements_count', '=', 0)]}">   
+                    <field name="purchase_agreements_count" string="Purchase Agreements" widget="statinfo"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

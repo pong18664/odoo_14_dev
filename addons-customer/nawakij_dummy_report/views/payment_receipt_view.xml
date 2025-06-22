@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Action -->
+    <record id="action_payment_receipt" model="ir.actions.act_window"> 
+        <field name="name">Payment Receipt</field>
+        <field name="res_model">payment.dummy</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain"></field>
+        <field name="context"></field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a new payment receipt.
+            </p>
+        </field>
+    </record>
+
+    <!-- menu button -->
+    <menuitem id="menu_payment_receipt"
+            name="Payment Receipt"
+            parent="account.menu_finance_receivables"
+            action="action_payment_receipt"
+            sequence="3"
+    />
+
+    <!-- Tree View -->
+    <record id="view_payment_dummy_tree" model="ir.ui.view">
+        <field name="name">payment.dummy.tree</field>
+        <field name="model">payment.dummy</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="payment_date" string="receipt date"/>
+                <field name="tax_invoice_number"/>
+                <field name="tax_invoice_date"/>
+                <field name="account_move_name"/>
+                <field name="account_move_date"/>
+                <field name="account_move_partner"/>
+                <field name="amount"/>
+                <field name="amount_due"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_payment_dummy_form" model="ir.ui.view">
+        <field name="name">payment.dummy.form</field>
+        <field name="model">payment.dummy</field>
+        <field name="arch" type="xml">
+            <form string="Payment Receipt">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="payment_date"/>
+                        <field name="tax_invoice_number"/>
+                        <field name="tax_invoice_date"/>
+                        <field name="account_move_name"/>
+                        <field name="account_move_date"/>
+                        <field name="account_move_partner"/>
+                        <field name="amount"/>
+                        <field name="amount_due"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

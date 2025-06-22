@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_purchase_requisition_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.requisition.form</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='488']" position="after">
+                <button name="action_view_mrp_production" type="object" class="oe_stat_button" icon="fa-inbox" attrs="{'invisible': [('mrp_production_count', '=', 0)]}">               
+                    <field name="mrp_production_count" string="Manufacturing" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='vendor_id']" position="after">
+                <field name="analytic_account_id"/>
+                <field name="internal_detail"/>
+            </xpath>
+            <xpath expr="//field[@name='line_ids']/tree//field[@name='account_analytic_id']" position="after">
+                <field name="p_quantity" optional="hide"/>
+                <field name="p_unit_price" attrs="{'readonly': [('type_product', 'not in', ['aluminium', 'aluminium sheet', 'glass']), ('id', '!=', False)]}" optional="hide"/>
+                <field name="density" attrs="{'readonly': [('type_product', '!=', 'aluminium'), ('id', '!=', False)]}" optional="hide"/>
+                <field name="type_product" invisible="1"/>                   
+            </xpath>
+            <xpath expr="//field[@name='line_ids']/tree//field[@name='product_uom_id']" position="after">
+                <field name="secondary_product_uom" attrs="{'readonly': [('id', '!=', False)]  }" optional="hide"/>                  
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_requisition_tree_inherit" model="ir.ui.view">
+        <field name="name">purchase.requisition.tree</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="before">
+                <field name="analytic_account_id"/>
+                <field name="internal_detail"/>
+            </xpath>
+        </field> 
+    </record>
+
+</odoo>

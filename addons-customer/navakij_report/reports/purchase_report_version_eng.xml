@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_purchase_order_version_eng_custom">
+
+        <!-- ส่วนหัว -->
+        <div class="header" style="font-size:14px;"> 
+            <!-- เพิ่มการอ้างอิงไฟล์ CSS -->
+            <link rel="stylesheet" href="/navakij_report/static/src/css/purchase_order_style_eng.css"/>
+
+            <!-- class row -->
+            <div class="row" style="width:100%; margin-left:0px;">
+                <!-- col ที่ 1 -->
+                <div class="col-2" style="width:150px; max-width:150px; min-width:150px; padding-top:10px;">
+                    <img style="width:100%;" t-att-src="image_data_uri(o.company_id.logo)" />
+                </div>
+                <!-- col ที่ 2 -->
+                <div class="col-8" style="padding-top:80px; padding-right:0px; text-align:right; width:540px; max-width:540px; min-width:540px;">
+                    <b style="font-size:22px;" t-field="o.company_id.name_company_eng"/>
+                    <br/>
+                </div>
+                <!-- col ที่ 3 -->
+                <div class="col-2" style="width:180px; max-width:180px; min-width:180px;">
+                    <div class="col" style="text-align:right; margin-right:2px;">
+                        <span style="font-size:14;">Page                            
+                            <span style="margin-left:5px" class="page" />
+                            <span style="margin-left:5px"> of </span>
+                            <span style="margin-left:5px" class="topage" />
+                            <br/>
+                        </span>
+                    </div>
+                    <div class="col" style="width:150px; max-width:150px; min-width:150px;">
+                        <t t-if="o.company_id.image">
+                            <img style="width:100%;" t-att-src="image_data_uri(o.company_id.image)" />
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; font-size:14;">
+                <span t-field="o.company_id.street_eng"/>
+                <span t-field="o.company_id.street2_eng"/>
+                <span t-field="o.company_id.city_eng"/>
+                <span t-field="o.company_id.zip"/>
+                <br/>
+                <span>Tel.                    <span t-field="o.company_id.phone"/>
+                <span t-field="o.company_id.email"/>
+                TAXID                    <span t-field="o.company_id.vat"/>
+                </span>
+                <br/>
+                <br/>
+                <b style="font-size:20px;">Purchase Order</b>
+            </div>
+
+            <!-- class row -->
+            <div class="row" style="width:100%; margin-left:0px;">
+                <!-- col ที่ 1 -->
+                <div class="col-8" style="padding-top:45px; padding-left:3px;">
+                    <!-- <span >
+                        <b>Suplier:</b>
+                        <span t-field="o.partner_id.ref"/>
+                    </span> -->
+                </div>
+                <!-- col ที่ 2 -->
+                <div class="col-2" style="border:1px solid; padding-left:0px; padding-right:0px; text-align:right; ">
+                    <div class="col-12" style=" padding-top:4px; padding-bottom:5px; padding-right:3px; border-bottom:1px solid; ">
+                        <span >
+                            <b>Doc. No.</b>
+                        </span>
+                    </div>
+                    <div class="col-12" style=" padding-top:4px; padding-bottom:5px; padding-right:3px; ">
+                        <span >
+                            <b>Doc. Date.</b>
+                        </span>
+                    </div>
+                </div>
+                <!-- col ที่ 3 -->
+                <div class="col-2" style="border:1px solid; padding-left:0px; padding-right:0px; text-align:left;">
+                    <div class="col-12" style="padding-top:5px; padding-bottom:5px; padding-left:3px; border-bottom:1px solid;">
+                        <span t-field="o.name"/>
+                    </div>
+                    <div class="col-12" style="padding-top:5px; padding-bottom:5px; padding-left:3px;">
+                        <span t-esc="o.get_formatted_date(o.date_approve)"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- table-left and table-right -->
+            <div class="row" style="width:870px; margin-left:0px; margin-top:2px;">
+                <div style="border:1px solid; width:433px;">
+                    <table class="table-left">
+                        <tbody>
+                            <tr>
+                                <td>Suplier</td>
+                                <td rowspan="2"><span t-field="o.partner_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td>Address</td>
+                                <td rowspan="3">
+                                    <span t-field="o.partner_id.street"/>
+                                    <span t-field="o.partner_id.street2"/>
+                                    <span t-field="o.partner_id.city"/>
+                                    <span t-field="o.partner_id.state_id.name"/>
+                                    <span t-field="o.partner_id.zip"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td>Tel.</td>
+                                <td>
+                                    <t t-if="o.partner_id.phone">
+                                        <span t-esc="o.partner_id.phone.replace('+66 ','0')"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span>-</span>
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="border:1px solid; width:432px; margin-left:6px;">
+                    <table class="table-right">
+                        <tbody>
+                            <tr>
+                                <td><b>Contact</b></td>
+                                <td rowspan="2">
+                                    <t t-if='o.partner_id.contact'>
+                                        <span t-field="o.partner_id.contact"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>Mobile</b></td>
+                                <td rowspan="2">
+                                    <t t-if="o.partner_id.contact_mobile">
+                                        <span t-field="o.partner_id.contact_mobile"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span>-</span>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>Delivery Date</b></td>
+                                <td rowspan="2"><span t-esc="o.get_formatted_date(o.date_planned)"/></td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:white;">.</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>Payment Terms</b></td>
+                                <td><span t-field="o.payment_term_id"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ส่วนกลาง -->
+        <div class="article">
+            <!-- เพิ่มการอ้างอิงไฟล์ CSS -->
+            <link rel="stylesheet" href="/navakij_report/static/src/css/purchase_order_style_eng.css"/>
+
+            <!-- table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th><b>Goods Code</b></th>
+                        <th><b>Item</b></th>
+                        <th><b>Qty.</b></th>
+                        <th><b>UOM</b></th>
+                        <th><b>Total Wt. or Area</b></th>
+                        <th><b>Wt. or Area/Unit</b></th>
+                        <th><b>Price/Unit</b></th>
+                        <th><b>Discount</b></th>
+                        <th><b>Amount</b></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <t t-set="unit" t-value="0"/>
+                    <t t-set="total_wt_or_area" t-value="0"/>
+                    <t t-foreach="o.order_line" t-as="line">
+                        <t t-set="unit" t-value="unit + line.product_qty"/>
+                        <t t-if="line.product_id.area">
+                            <t t-set="total_wt_or_area" t-value="total_wt_or_area + (line.product_id.area * line.product_qty)"/>
+                        </t>
+                        <t t-else="">
+                            <t t-if="line.product_id">
+                                <t t-set="total_wt_or_area" t-value="total_wt_or_area + ((line.product_id.length * line.density) * line.product_qty)"/>
+                            </t>
+                        </t>
+                        <tr>
+                            <td>
+                                <t t-if="line.product_id">
+                                    <span t-field="line.product_id.name"/>
+                                </t>    
+                            </td>
+                            <td>
+                                <t t-if="line.product_id">
+                                    <span>
+                                        <span t-field="line.product_code"/>
+                                        <span t-field="line.product_name"/>
+                                        [<span t-field="line.product_variant"/>]
+                                    </span>
+                                </t>
+                                <t t-else="">
+                                    <span t-field="line.name"/>
+                                </t> 
+                            </td>
+                            <td>
+                                <t t-if="line.product_id">
+                                    <span t-field="line.product_qty"/>
+                                </t>    
+                            </td>
+                            <td>
+                                <t t-if="line.product_id">
+                                    <span t-field="line.product_uom"/>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-if="line.product_id.area">
+                                    <span t-esc="'{0:,.3f}'.format(line.product_id.area * line.product_qty)"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-if="line.product_id">
+                                        <span t-esc="'{0:,.3f}'.format((line.product_id.length * line.density) * line.product_qty)"/>
+                                    </t>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-if="line.product_id.area">
+                                    <span t-esc="'{0:,.3f}'.format(line.product_id.area)"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-if="line.product_id">
+                                        <span t-esc="'{0:,.3f}'.format(line.product_id.length * line.density)"/>
+                                    </t>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-if="line.product_id">
+                                    <t t-if="line.product_id.categ_id.type_category == 'glass' or line.product_id.categ_id.type_category == 'aluminium sheet'">
+                                        <t t-if="line.p_unit_price == 0">
+                                            <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-esc="'{0:,.3f}'.format(line.product_id.area * line.p_unit_price)"/>
+                                        </t>
+                                    </t>
+                                    <t t-elif="line.product_id.categ_id.type_category == 'aluminium'">
+                                        <t t-if="line.p_unit_price == 0">
+                                            <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-esc="'{0:,.2f}'.format((line.product_id.length * line.density) * line.p_unit_price)"/>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                    </t>
+                                </t>
+                            </td>
+                            <td>
+                                <!-- discount -->
+                            </td>
+                            <td>
+                                <t t-if="line.product_id">
+                                    <span t-esc="'{0:,.2f}'.format(line.price_subtotal)"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+
+            </table>
+        </div>
+
+        <!-- ส่วนท้าย -->
+        <div class="footer" style="font-size:14px;">
+
+            <div class="row" style="margin-left:0px; margin-right:0px;">
+                <div class="col-4" style="text-align:right; padding-right:2px; width:134px; width-max:134px; width-min:134px;">
+                    <span>Total</span>
+                </div>
+                <div class="col-4" style="text-align:right; padding-right:2px; width:238px; width-max:238px; width-min:238px;">
+                    <span t-esc="'{0:,.2f}'.format(unit)"/>
+                </div>
+                <div class="col-4" style="text-align:right; padding-right:2px; width:143px; width-max:143px; width-min:143px;">
+                    <span t-esc="'{0:,.3f}'.format(total_wt_or_area)"/>
+                </div>
+            </div>
+
+            <div class="row" style="margin-left:0px; margin-right:0px; margin-top:2px;">
+
+                <!-- col ที่ 1 -->
+                <div class="col-7" style="border:1px solid; padding-left:0px; padding-right:0px;">
+                    <div class="col-12" style="border-bottom:1px solid; padding-top:4px; padding-bottom:35px; padding-left:3px;">
+                        <span>
+                            <b>Remark:</b>
+                            <br/>
+                            <!-- <span t-field="o.notes"/> -->
+                            <span><b>Analytic Account:</b> <span t-field="o.analytic_account_id.name"/></span>
+                            <br/>
+                            <span><b>Ref Analytic Account: </b> <span t-field="o.analytic_account_id.code"/></span>
+                        </span>
+                    </div>
+                    <!-- amount to text ENG -->
+                    <div class="col-12" style="text-align:center; padding-top:4px; padding-bottom:4px;">
+                        <span>
+                            <!-- ภาษาอังกฤษ -->
+                            <t t-set="amount_to_text_eng" t-value="o.currency_id.with_context(lang='en_US').amount_to_text(o.amount_total)" />
+                            <t t-esc="amount_to_text_eng" />
+                        </span>
+                    </div>
+                </div>
+
+                <!-- col ที่ 2 -->
+                <div class="col-3" style="border-top:1px solid; border-bottom:1px solid; border-right:1px solid; padding-left:0px; padding-right:0px;">
+                    <div class="col-12" style="border-bottom:1px solid; padding-top:4px; padding-bottom:4px;">
+                        <span >
+                            <b>Amount after Discount</b>
+                        </span>
+                    </div>
+                    <div class="col-12" style="border-bottom:1px solid; padding-top:4px; padding-bottom:4px;">
+                        <span>
+                            <b>VAT 7%</b>
+                        </span>
+                    </div>
+                    <div class="col-12" style="padding-left:0px; padding-right:0px;  padding-top:4px; padding-bottom:4px;">
+                        <span style="padding-left:14px;">
+                            <b>Total Amount</b>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- col ที่ 3 -->
+                <div class="col-2" style="border-top:1px solid; border-bottom:1px solid; border-right:1px solid; padding-left:0px; padding-right:0px; text-align:right; ">
+                    <div class="col-12" style="border-bottom:1px solid; padding-right:2px;  padding-top:4px; padding-bottom:5px;">
+                        <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
+                    </div>
+                    <div class="col-12" style="border-bottom:1px solid; padding-right:3px;  padding-top:4px; padding-bottom:5px;">
+                        <span t-esc="'{0:,.2f}'.format(o.amount_tax)"/>
+                    </div>
+                    <div class="col-12" style="padding-left:0px; padding-right:0px; text-align:right; padding-top:4px; padding-bottom:4px;">
+                        <span style="padding-right:3px;" t-esc="'{0:,.2f}'.format(o.amount_total)"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row" style="margin-left:0px; margin-right:0px; margin-top:10px;">
+
+                <!-- col ที่ 1 -->
+                <div class="col-5" style="border:1px solid; padding-left:0px; padding-right:0px;">
+                    <div class="col-12" style="border-bottom:1px solid; padding-left:3px; padding-top:3px; padding-bottom:3px;">
+                        <span>Other Condition</span>
+                    </div>
+                    <div class="col-12" style="padding-left:3px; padding-top:3px; padding-bottom:40px;">
+                        <span>(1) Please specify above Purchase Order number in every Delivery Bill Tax Invoice.</span>
+                        <br/>
+                        <span>(2) Invoicing and cheque receiving is following as the company policy of terms conditions.</span>
+                        <br/>
+                        <span>(3) Invoice for payment, Please always enclose the copy of Purchase Order.</span>
+                    </div>
+                </div>
+
+                <!-- col ที่ 2 -->
+                <div class="col-3" style="border-top:1px solid; border-bottom:1px solid; border-right:1px solid; padding-left:0px; padding-right:0px;">
+                    <div class="col-12" style="border-bottom:1px solid; padding-top:3px; padding-bottom:3px; text-align:center">
+                        <span>Prepared by</span>
+                    </div>
+                    <t t-if="o.check_by_id.signature_image">
+                        <div class="col-12" style="border-bottom:1px solid; padding-top:5px; padding-bottom:5px; padding-left:4px;">
+                            <img style="width:210px; min-width:210px; max-width:210px; height:50px; min-height:50px; max-height:50px;" t-att-src="image_data_uri(o.check_by_id.signature_image)" />
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="col-12" style="border-bottom:1px solid; padding-bottom:60px;">
+                        </div>
+                    </t>
+                    <div class="col-12" style="border-bottom:1px solid; padding-top:3px; padding-bottom:3px; text-align:center">
+                        <span>Checked By</span>
+                    </div>
+                    <t t-if="o.approve_1_by_id.signature_image">
+                        <div class="col-12" style="padding-top:5px; padding-bottom:5px; padding-left:4px;">
+                            <img style="width:210px; min-width:210px; max-width:210px; height:50px; min-height:50px; max-height:50px;" t-att-src="image_data_uri(o.approve_1_by_id.signature_image)" />
+                        </div>
+                    </t>   
+                    <t t-else="">
+                        <div class="col-12">
+                        </div>
+                    </t> 
+                    <!-- <div class="col-12">
+
+                    </div> -->
+                </div>
+
+                <!-- col ที่ 3 -->
+                <div class="col-4" style="border-top:1px solid; border-bottom:1px solid; border-right:1px solid; padding-left:0px; padding-right:0px;">
+                    <!-- <div class="col-12" style="border-bottom:1px solid; padding-bottom:92px; padding-top:3px; padding-left:3px;">
+                        <span>Nominally</span>
+                    </div> -->
+                    <t t-if="o.check_config_po">
+                        <t t-if="o.approve_2_by_id.signature_image">
+                            <div class="col-12" style="border-bottom:1px solid; padding-top:3px; padding-left:3px;">
+                                <span>Nominally</span><br/>
+                                <img style="width:210px; min-width:210px; max-width:210px; height:50px; min-height:50px; max-height:50px; margin-top:10px; margin-bottom:32px; margin-left:40px;" t-att-src="image_data_uri(o.approve_2_by_id.signature_image)" />
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="col-12" style="border-bottom:1px solid; padding-bottom:92px; padding-top:3px; padding-left:3px;">
+                                <span>Nominally</span>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <t t-if="o.approve_1_by_id.signature_image">
+                            <div class="col-12" style="border-bottom:1px solid; padding-top:3px; padding-left:3px;">
+                                <span>Nominally</span><br/>
+                                    <img style="width:210px; min-width:210px; max-width:210px; height:50px; min-height:50px; max-height:50px; margin-top:10px; margin-bottom:32px; margin-left:40px;" t-att-src="image_data_uri(o.approve_1_by_id.signature_image)" />
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="col-12" style="border-bottom:1px solid; padding-bottom:92px; padding-top:3px; padding-left:3px;">
+                                <span>Nominally</span>
+                            </div>
+                        </t>
+                    </t>
+                    <div class="col-12" style="text-align:center; padding-top:20px; padding-bottom:20px;">
+                        <span>Authorized signature</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+
+
+    <template id="report_purchase_order_eng_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="navakij_report.report_purchase_order_version_eng_custom" />
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- dummy invoice report th -->
+    <record id="invoice_report_dummy_th_pdf" model="ir.actions.report">
+        <field name="name">Print Invoice Dummy</field>
+        <field name="model">account.move</field>
+        <field name="report_name">nawakij_dummy_report.template_invoice_report_dummy</field>
+        <field name="report_file">nawakij_dummy_report.template_invoice_report_dummy</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report invoice (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="nawakij_dummy_report.dummy_invoice_report_paperformat" />
+    </record>
+
+    <!-- dummy billing note report th -->
+    <record id="billing_note_report_dummy_th_pdf" model="ir.actions.report">
+        <field name="name">Print Billing Note Dummy</field>
+        <field name="model">account.move</field>
+        <field name="report_name">nawakij_dummy_report.template_billing_note_report_dummy</field>
+        <field name="report_file">nawakij_dummy_report.template_billing_note_report_dummy</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report billing note (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="nawakij_dummy_report.dummy_billing_note_report_paperformat" />
+    </record>
+
+    <!-- dummy payment receipt report th -->
+    <record id="payment_receipt_report_dummy_th_pdf" model="ir.actions.report">
+        <field name="name">Print Payment Receipt</field>
+        <field name="model">account.move</field>
+        <field name="report_name">nawakij_dummy_report.template_payment_receipt_report_dummy</field>
+        <field name="report_file">nawakij_dummy_report.template_payment_receipt_report_dummy</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report payment receipt (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="nawakij_dummy_report.dummy_payment_receipt_paperformat"/>
+    </record>
+ 
+</odoo>

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- credit note version TH -->
+    <record id="report_credit_note_form_th_pdf" model="ir.actions.report">
+        <field name="name">Print Credit Note (TH) </field>
+        <field name="model">account.move</field>
+        <field name="report_name">navakij_report.report_credit_note_th_pdf</field>
+        <field name="report_file">navakij_report.report_credit_note_th_pdf</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report credit note (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_credit_note_paperformat" />
+    </record>
+
+    <!-- billing note version TH -->
+    <record id="report_billing_note_form_th_pdf" model="ir.actions.report">
+        <field name="name">Report Billing Note (TH) </field>
+        <field name="model">account.move</field>
+        <field name="report_name">navakij_report.report_billing_note_th_pdf</field>
+        <field name="report_file">navakij_report.report_billing_note_th_pdf</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report billing note (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_billing_note_paperformat" />
+    </record>
+
+    <!-- payment receipt version TH -->
+    <record id="report_payment_receipt_form_th_pdf" model="ir.actions.report">
+        <field name="name">Payment Receipt (TH)</field>
+        <field name="model">account.payment</field>
+        <field name="report_name">navakij_report.report_payment_receipt_th_pdf</field>
+        <field name="report_file">navakij_report.report_payment_receipt_th_pdf</field>
+        <field name="binding_model_id" ref="payment.model_account_payment" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report payment receipt (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_payment_receipt_paperformat" />
+    </record>
+     
+    <!-- purchase order version TH -->
+    <record id="report_purchase_order_form_th_pdf" model="ir.actions.report">
+        <field name="name">Report Purchase (TH) </field>
+        <field name="model">purchase.order</field>
+        <field name="report_name">navakij_report.report_purchase_order_th_pdf</field>
+        <field name="report_file">navakij_report.report_purchase_order_th_pdf</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report purchase (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_purchase_paperformat" />
+    </record>
+
+    <!-- purchase order version ENG -->
+    <record id="report_purchase_order_form_eng_pdf" model="ir.actions.report">
+        <field name="name">Report Purchase (ENG) </field>
+        <field name="model">purchase.order</field>
+        <field name="report_name">navakij_report.report_purchase_order_eng_pdf</field>
+        <field name="report_file">navakij_report.report_purchase_order_eng_pdf</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report purchase (ENG)- %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_purchase_paperformat" />
+    </record>
+
+    <!-- invoice version TH -->
+    <record id="report_invoice_form_th_pdf" model="ir.actions.report">
+        <field name="name">Report Invoice (TH) </field>
+        <field name="model">account.move</field>
+        <field name="report_name">navakij_report.report_invoice_th_pdf</field>
+        <field name="report_file">navakij_report.report_invoice_th_pdf</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report invoice (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_invoice_paperformat" />
+    </record>
+
+    <!-- invoice version ENG -->
+    <record id="report_invoice_form_eng_pdf" model="ir.actions.report">
+        <field name="name">Report Invoice (ENG) </field>
+        <field name="model">account.move</field>
+        <field name="report_name">navakij_report.report_invoice_eng_pdf</field>
+        <field name="report_file">navakij_report.report_invoice_eng_pdf</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report invoice (ENG) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_invoice_paperformat" />
+    </record>
+
+    <!-- tax invoice version TH -->
+    <record id="report_tax_invoice_form_th_pdf" model="ir.actions.report">
+        <field name="name">Report Tax Invoice (TH) </field>
+        <field name="model">account.move</field>
+        <field name="report_name">navakij_report.report_tax_invoice_th_pdf</field>
+        <field name="report_file">navakij_report.report_tax_invoice_th_pdf</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report tax invoice (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_tax_invoice_paperformat" />
+    </record>
+
+    <!-- tax invoice version ENG -->
+    <record id="report_tax_invoice_form_eng_pdf" model="ir.actions.report">
+        <field name="name">Report Tax Invoice (ENG) </field>
+        <field name="model">account.move</field>
+        <field name="report_name">navakij_report.report_tax_invoice_eng_pdf</field>
+        <field name="report_file">navakij_report.report_tax_invoice_eng_pdf</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('report tax invoice (ENG) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_tax_invoice_paperformat" />
+    </record>
+
+    <!-- receipt version TH -->
+    <record id="report_receipt_form_th_pdf" model="ir.actions.report">
+        <field name="name">Receipt (TH) </field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">navakij_report.report_receipt_th_pdf</field>
+        <field name="report_file">navakij_report.report_receipt_th_pdf</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('receipt (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_receipt_paperformat" />
+    </record>
+
+    <!-- receipt version ENG -->
+    <record id="report_receipt_form_eng_pdf" model="ir.actions.report">
+        <field name="name">Receipt (ENG) </field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">navakij_report.report_receipt_eng_pdf</field>
+        <field name="report_file">navakij_report.report_receipt_eng_pdf</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('receipt (ENG) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_receipt_paperformat" />
+    </record>
+
+    <!-- delivery version TH -->
+    <record id="report_delivery_form_th_pdf" model="ir.actions.report">
+        <field name="name">Delivery (TH) </field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">navakij_report.report_delivery_th_pdf</field>
+        <field name="report_file">navakij_report.report_delivery_th_pdf</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('delivery (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_delivery_paperformat" />
+    </record>
+
+    <!-- delivery version ENG -->
+    <record id="report_delivery_form_eng_pdf" model="ir.actions.report">
+        <field name="name">Delivery (ENG) </field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">navakij_report.report_delivery_eng_pdf</field>
+        <field name="report_file">navakij_report.report_delivery_eng_pdf</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('delivery (ENG) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_delivery_paperformat" />
+    </record>
+
+    <!-- manufacturing version TH -->
+    <record id="report_manufacturing_form_th_pdf" model="ir.actions.report">
+        <field name="name">Manufacturing (TH) </field>
+        <field name="model">mrp.production</field>
+        <field name="report_name">navakij_report.report_manufacturing_th_pdf</field>
+        <field name="report_file">navakij_report.report_manufacturing_th_pdf</field>
+        <field name="binding_model_id" ref="mrp.model_mrp_production" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('manufacturing (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_manufacturing_paperformat" />
+    </record>
+
+    <!-- manufacturing version ENG -->
+    <record id="report_manufacturing_form_eng_pdf" model="ir.actions.report">
+        <field name="name">Manufacturing (ENG) </field>
+        <field name="model">mrp.production</field>
+        <field name="report_name">navakij_report.report_manufacturing_eng_pdf</field>
+        <field name="report_file">navakij_report.report_manufacturing_eng_pdf</field>
+        <field name="binding_model_id" ref="mrp.model_mrp_production" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('manufacturing (ENG) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_manufacturing_paperformat" />
+    </record>
+
+    <!-- pick components version TH -->
+    <record id="report_pick_components_form_th_pdf" model="ir.actions.report">
+        <field name="name">Pick Components (TH) </field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">navakij_report.report_pick_components_th_pdf</field>
+        <field name="report_file">navakij_report.report_pick_components_th_pdf</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('pick components (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_pick_components_paperformat" />
+    </record>
+
+    <!-- pick components version ENG -->
+    <record id="report_pick_components_form_eng_pdf" model="ir.actions.report">
+        <field name="name">Pick Components (ENG) </field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">navakij_report.report_pick_components_eng_pdf</field>
+        <field name="report_file">navakij_report.report_pick_components_eng_pdf</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('pick components (ENG) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_pick_components_paperformat" />
+    </record>
+
+    <!-- store finished product version TH -->
+    <record id="report_store_finished_product_form_th_pdf" model="ir.actions.report">
+        <field name="name">Store Finished Product (TH) </field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">navakij_report.report_store_finished_product_th_pdf</field>
+        <field name="report_file">navakij_report.report_store_finished_product_th_pdf</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('store finished product (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_store_finished_product_paperformat" />
+    </record>
+
+    <!-- store finished product version ENG -->
+    <record id="report_store_finished_product_form_eng_pdf" model="ir.actions.report">
+        <field name="name">Store Finished Product (ENG) </field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">navakij_report.report_store_finished_product_eng_pdf</field>
+        <field name="report_file">navakij_report.report_store_finished_product_eng_pdf</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('store finished product (ENG) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_store_finished_product_paperformat" />
+    </record>
+
+    <!-- store raw materials version TH -->
+    <record id="report_store_raw_materials_form_th_pdf" model="ir.actions.report">
+        <field name="name">Store Raw Materials (TH) </field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">navakij_report.report_store_raw_materials_th_pdf</field>
+        <field name="report_file">navakij_report.report_store_raw_materials_th_pdf</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('store raw materials (TH) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_store_raw_materials_paperformat" />
+    </record>
+
+    <!-- store raw materials version ENG -->
+    <record id="report_store_raw_materials_form_eng_pdf" model="ir.actions.report">
+        <field name="name">Store Raw Materials (ENG) </field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">navakij_report.report_store_raw_materials_eng_pdf</field>
+        <field name="report_file">navakij_report.report_store_raw_materials_eng_pdf</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">('store raw materials (ENG) - %s' % (object.name))</field>
+        <field name="paperformat_id" ref="navakij_report.report_store_raw_materials_paperformat" />
+    </record>
+    
+</odoo>

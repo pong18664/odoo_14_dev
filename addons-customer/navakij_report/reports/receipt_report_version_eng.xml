@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_receipt_version_eng_custom">
+
+        <!-- ส่วนหัว -->
+        <div class="header" style="font-size:14px;">
+
+            <!-- class row -->
+            <div class="row" style="width:100%; margin-left:0px;">
+                <!-- col ที่ 1 -->
+                <div class="col-2" style="width:150px; max-width:150px; min-width:150px; padding-top:10px;">
+                    <img style="width:100%;" t-att-src="image_data_uri(o.company_id.logo)" />
+                </div>
+                <!-- col ที่ 2 -->
+                <div class="col-8" style="padding-top:80px; padding-right:0px; text-align:right; width:540px; max-width:540px; min-width:540px;">
+                    <b style="font-size:22px;" t-field="o.company_id.name_company_eng"/>
+                    <br/>
+                </div>
+                <!-- col ที่ 3 -->
+                <div class="col-2" style="width:180px; max-width:180px; min-width:180px;">
+                    <div class="col" style="text-align:right; margin-right:2px;">
+                        <span style="font-size:14;">Page                            
+                            <span style="margin-left:5px" class="page" />
+                            <span style="margin-left:5px"> of </span>
+                            <span style="margin-left:5px" class="topage" />
+                            <br/>
+                        </span>
+                    </div>
+                    <div class="col" style="width:150px; max-width:150px; min-width:150px;">
+                        <t t-if="o.company_id.image">
+                            <img style="width:100%;" t-att-src="image_data_uri(o.company_id.image)" />
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; font-size:14;">
+                <span t-field="o.company_id.street_eng"/>
+                <span t-field="o.company_id.street2_eng"/>
+                <span t-field="o.company_id.city_eng"/>
+                <span t-field="o.company_id.zip"/>
+                <br/>
+                <span>Tel.                    <span t-field="o.company_id.phone"/>
+                <span t-field="o.company_id.email"/>
+                TAXID                    <span t-field="o.company_id.vat"/>
+            </span>
+            <br/>
+            <br/>
+                <b style="font-size:20px;">Receipt</b>
+            </div>
+
+            <!-- class row -->
+            <div class="row" style="width:100%; margin-left:0px;">
+                <!-- col ที่ 1 -->
+                <div class="col-8" style="padding-top:45px; padding-left:3px;">
+                    
+                </div>
+                <!-- col ที่ 2 -->
+                <div class="col-2" style="padding-left:0px; padding-right:0px; text-align:right; ">
+                    <div class="col-12" style=" padding-top:4px; padding-bottom:5px; padding-left:0px;">
+                        <span >
+                            <b>Number</b>
+                        </span>
+                    </div>
+                    <div class="col-12" style=" padding-top:4px; padding-bottom:5px; padding-left:0px; ">
+                        <span >
+                            <b>Date</b>
+                        </span>
+                    </div>
+                </div>
+                <!-- col ที่ 3 -->
+                <div class="col-2" style="padding-left:0px; padding-right:0px; text-align:left;">
+                    <div class="col-12" style="padding-top:5px; padding-bottom:5px; padding-left:3px; ">
+                        <span t-field="o.name"/>
+                    </div>
+                    <div class="col-12" style="padding-top:5px; padding-bottom:5px; padding-left:3px;">
+                        <span t-esc="o.get_formatted_date(o.date_done)"/>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class="col-12" style="border-bottom:1px solid;"></div>
+
+            <!-- class row -->
+            <div class="row" style="width:100%; margin-left:0px; margin-top:3px;">
+
+                <div class="col-6">
+                    <b>Vendor</b><br/>
+                    <span t-field="o.partner_id.name"/><br/><br/>
+                    <span t-field="o.partner_id.street_eng"/><br/>
+                    <span t-field="o.partner_id.street2_eng"/>
+                    <span t-field="o.partner_id.city_eng"/>
+                    <!-- <span t-field="o.partner_id.zip"/> -->
+                    <b>Tax ID.</b> <span t-field="o.partner_id.vat"/>  Head office <br/>
+                    <t t-if="o.partner_id.phone">
+                        <span>
+                            <b>Telephone.</b>
+                                <span t-esc="o.partner_id.phone.replace('+66','0')"/>
+                            <b style="margin-left:20px;">Fax.</b>
+                                <span t-esc="o.partner_id.phone.replace('+66','0')"/>
+                        </span>
+                    </t>
+                </div>
+
+                <div class="col-6">
+                    <b>Remark :</b><br/>
+                    <!-- <span t-field="o.partner_id.name"/>  -->
+                    <span>note</span>
+                </div>
+
+            </div>
+
+            <div class="col-12" style="border-bottom:1px solid;">
+            </div>
+
+        </div>
+
+        <!-- ส่วนกลาง -->
+        <div class="article">
+            <!-- table -->
+            <table style="
+                            font-size:14px; 
+                            text-align:center;
+                            width:100%;
+                            ">
+                <thead>
+                    <tr>
+                        <th style="padding-top:4px; padding-bottom:4px;">
+                            <b>No.</b>
+                        </th>
+                        <th style="padding-top:4px; padding-bottom:4px; ">
+                            <b>Product</b>
+                        </th>
+                        <th style="padding-top:4px; padding-bottom:4px;">
+                            <b>Description</b>
+                        </th>
+                        <th style="padding-top:4px; padding-bottom:4px;">
+                            <b>Quantity Unit</b>
+                        </th>
+                        <th style="padding-top:4px; padding-bottom:4px;">
+                            <b>Purchase no.</b>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody style="text-align:right">
+                    <t t-set="count" t-value="0"/>
+                    <t t-foreach="o.move_line_ids_without_package" t-as="line">
+                        <t t-set="count" t-value="count + 1"/>
+                        <tr>
+                            <td style="text-align:center;">
+                                <span t-esc="count"/>
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.product_id"/>
+                            </td>
+                            <td style="text-align:center;">
+                                <!-- <span t-field="line.product_id"/> -->
+                                No information
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.qty_done"/>
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="o.origin"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ส่วนท้าย -->
+        <div class="footer" style="font-size:14px;">
+
+
+            <div class="row" style="margin-left:0px; margin-right:0px; padding-top:100px;">
+
+                <!-- col ที่ 1 -->
+                <div class="col-4" style="text-align:center;">
+                    <span>
+                    __________________________________________<br/>
+                    Received by 
+                    </span>
+                </div>
+
+                <!-- col ที่ 2 -->
+                <div class="col-4" style="text-align:center;">
+                    <span>
+                    __________________________________________<br/>
+                    Checked by
+                    </span>
+                </div>
+
+                <!-- col ที่ 3 -->
+                <div class="col-4" style="text-align:center;">
+                    <span>
+                    __________________________________________<br/>
+                    Authorized signature
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+
+
+    <template id="report_receipt_eng_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="navakij_report.report_receipt_version_eng_custom" />
+            </t>
+        </t>
+    </template>
+</odoo>

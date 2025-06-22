@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_company_form_inherit_view_custom" model="ir.ui.view">
+        <field name="name">res.company.form.inherit.custom</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='website']" position="after">
+                <field name="journal_default_id" invisible="1"/>
+                <field name="debit_default_id" invisible="1"/>
+                <field name="credit_default_id" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,298 @@
+/* header */
+/* ส่วนของ div table class table-left */
+.header div.div-left {
+    border:1px solid; 
+    width:432px;
+    min-width: 432px;
+    max-width: 432px; 
+    height:200px; 
+    min-height:200px; 
+    max-height:200px;
+}
+
+.header table.table-left{
+    table-layout:fixed;
+}
+
+.header table.table-left tr:nth-child(1) td:nth-child(1) {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    padding-top: 2px;
+}
+
+.header table.table-left tr:nth-child(1) td:nth-child(2) {
+    width: 372px;
+    min-width: 372px;
+    max-width: 372px;
+    padding-top: 2px;
+}
+
+.header table.table-left td:nth-child(1) {
+    padding-left: 4px;
+}
+
+/* ส่วนของ div table class table-right */
+.header div.div-right {
+    border:1px solid; 
+    width:432px;
+    min-width: 432px;
+    max-width: 432px;
+    margin-left:6px;
+}
+
+.header table.table-right {
+    table-layout:fixed;
+}
+
+.header table.table-right tr:nth-child(1) td:nth-child(1) {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    padding-top: 2px;
+}
+
+.header table.table-right tr:nth-child(1) td:nth-child(2) {
+    width: 332px;
+    min-width: 332px;
+    max-width: 332px;
+    padding-top: 2px;
+}
+
+.header table.table-right td:nth-child(1) {
+    padding-left: 4px;
+}
+
+/* ส่วนของ table calss number_po */
+.header table.number_po {
+    width:870px;
+    min-width: 870px;
+    max-width: 870px;
+}
+
+.header table.number_po{
+    margin-top: 3px;
+    table-layout: fixed;
+}
+
+.header table.number_po th,
+.header table.number_po td {
+    border: 1px solid;
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.header table.number_po tr:nth-child(1) th {
+    width: 217.5px;
+    min-width: 217.5px;
+    max-width: 217.5px;
+}
+
+/* class article */
+.article {
+    font-size: 14px;
+}
+
+/* ส่วนของ table */
+.article table {
+    table-layout: fixed;
+}
+
+/* ส่วนของ header */
+.article table thead th {
+    border: 1px solid; 
+    text-align: center;
+    padding-top: 4px; 
+    padding-bottom: 4px;
+}
+
+.article table thead th:nth-child(1) {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+}
+
+.article table thead th:nth-child(2) {
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.article table thead th:nth-child(3) {
+    width: 245px;
+    min-width: 245px;
+    max-width: 245px;
+}
+
+.article table thead th:nth-child(4) {
+    width: 84px;
+    min-width: 84px;
+    max-width: 84px;
+}
+
+.article table thead th:nth-child(5) {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.article table thead th:nth-child(6) {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+.article table thead th:nth-child(7) {
+    width: 70px;
+    min-width: 70px;
+    max-width: 70px;
+}
+
+.article table thead th:nth-child(8) {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+/* ส่วนของ body */
+.article table tbody td:nth-child(1) {
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.article table tbody td:nth-child(2) {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.article table tbody td:nth-child(3) {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.article table tbody td:nth-child(4) {
+    text-align: right;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.article table tbody td:nth-child(5) {
+    text-align: right;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.article table tbody td:nth-child(6) {
+    text-align: right;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.article table tbody td:nth-child(7) {
+    text-align: right;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.article table tbody td:nth-child(8) {
+    text-align: right;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+/* class footer */
+.footer {
+    font-size: 14px; 
+}
+
+/* ส่วนของ table */
+.footer table {
+    table-layout:fixed;
+}
+
+/* ส่วนของ body */
+.footer table td {
+    border:1px solid;
+}
+
+/* หมายเหตุ */
+.footer table tr:nth-child(1) td:nth-child(1) {
+    text-align:left;
+    padding-left:4px;
+    padding-top: 4px;
+    width:520px;
+    min-width: 520px;
+    max-width: 520px;
+}
+
+/* รวมเงิน */
+.footer table tr:nth-child(1) td:nth-child(2) {
+    text-align:left;
+    padding-left:4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width:180px;
+    min-width: 180px;
+    max-width: 180px;
+}
+
+/* value รวมเงิน */
+.footer table tr:nth-child(1) td:nth-child(3) {
+    text-align:right;
+    padding-right:4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width:170px;
+    min-width: 170px;
+    max-width: 170px;
+}
+
+/* ภาษีมูลค่าเพิ่ม */
+.footer table tr:nth-child(2) td:nth-child(1) {
+    text-align:left;
+    padding-left:4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/* value ภาษีมูลค่าเพิ่ม */
+.footer table tr:nth-child(2) td:nth-child(2) {
+    text-align:right;
+    padding-right:4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/* จำนวนเงินทั้งสิ้น */
+.footer table tr:nth-child(3) td:nth-child(1) {
+    text-align:left;
+    padding-left:4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/* value จำนวนเงินทั้งสิ้น */
+.footer table tr:nth-child(3) td:nth-child(2) {
+    text-align:right;
+    padding-right:4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/* text amount */
+.footer table tr:nth-child(6) td:nth-child(1) {
+    text-align:center;
+    padding-top:4px;
+    padding-bottom: 4px;
+}
+
+.footer table tr:nth-child(7) td:nth-child(1) {
+    text-align: left;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+}
+
+

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <!-- paperformat credit note -->
+    <record id="report_credit_note_paperformat" model="report.paperformat">
+        <field name="name">credit note A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">98</field>
+        <field name="margin_bottom">60</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">91</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- paperformat billing note -->
+    <record id="report_billing_note_paperformat" model="report.paperformat">
+        <field name="name">billing note A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">130</field>
+        <field name="margin_bottom">80</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">123</field>
+        <field name="dpi">90</field>
+    </record> 
+
+    <!-- paperformat payment receipt -->
+    <record id="report_payment_receipt_paperformat" model="report.paperformat">
+        <field name="name">payment receipt A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">115</field>
+        <field name="margin_bottom">80</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">108</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- paperformat purchase -->
+    <record id="report_purchase_paperformat" model="report.paperformat">
+        <field name="name">purchase A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">115</field>
+        <field name="margin_bottom">85</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">105</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- paperformat invoice -->
+    <record id="report_invoice_paperformat" model="report.paperformat">
+        <field name="name">invoice A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">130</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">123</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- paperformat tax invoice -->
+    <record id="report_tax_invoice_paperformat" model="report.paperformat">
+        <field name="name">tax invoice A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">129</field>
+        <field name="margin_bottom">35</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">121</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- paperformat receipts -->
+    <record id="report_receipt_paperformat" model="report.paperformat">
+        <field name="name">receipt A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">77</field>
+        <field name="margin_bottom">22</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">72</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- paperformat receipts backup-->  
+    <!-- <record id="report_receipt_paperformat" model="report.paperformat">
+        <field name="name">receipt A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">118</field>
+        <field name="margin_bottom">80</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">108</field>
+        <field name="dpi">90</field>
+    </record> -->
+
+    <!-- paperformat delivery -->
+    <record id="report_delivery_paperformat" model="report.paperformat">
+        <field name="name">delivery A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">77</field>
+        <field name="margin_bottom">22</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">72</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- paperformat delivery backup-->
+    <!-- <record id="report_delivery_paperformat" model="report.paperformat">
+        <field name="name">delivery A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">118</field>
+        <field name="margin_bottom">80</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">108</field>
+        <field name="dpi">90</field>
+    </record> -->
+
+    <!-- paperformat manufacturing -->
+    <record id="report_manufacturing_paperformat" model="report.paperformat">
+        <field name="name">manufacturing A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">90</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">84</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- paperformat pick components -->
+    <record id="report_pick_components_paperformat" model="report.paperformat">
+        <field name="name">pick components A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">55</field>
+        <field name="margin_bottom">2</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">50</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- paperformat pick components backup -->
+    <!-- <record id="report_pick_components_paperformat" model="report.paperformat">
+        <field name="name">pick components A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">90</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">80</field>
+        <field name="dpi">90</field>
+    </record> -->
+
+    <!-- paperformat store finished product -->
+    <record id="report_store_finished_product_paperformat" model="report.paperformat">
+        <field name="name">store finished product A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">90</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">80</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- paperformat store raw materials -->
+    <record id="report_store_raw_materials_paperformat" model="report.paperformat">
+        <field name="name">store raw materials A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">90</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">80</field>
+        <field name="dpi">90</field>
+    </record>
+
+</odoo>

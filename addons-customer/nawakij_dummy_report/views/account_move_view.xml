@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <!-- เพิ่ม tab ใหม่ -->
+            <xpath expr="//page[@name='other_info']" position="after">
+
+                <!-- เพิ่ม tab dummy tax -->
+                <page name="dummy_tax" string="Dummy Tax">
+                    <group>
+                        <group>
+                            <field name="vat_dummy_id"/>
+                            <field name="wht_dummy_id"/>
+                        </group>
+                    </group>
+                </page>
+
+                <!-- เพิ่ม tab dummy receipt -->
+                <page name="dummy receipt" string="Receipt">
+                    <group>
+                        <group>
+                            <field name="net_total" string="Amount Total"/>
+                            <field name="amount_due_payment_dummy" string="Amount Due"/>
+                            <field name="pay_this_round" string="Pay This Round"/>
+                        </group>
+                        <group>
+                            <field name="payment_dummy_id" string="Receipt to be printed"/>
+                        </group>
+                    </group>
+                    
+                    <button name="create_payment_dummy" 
+                        string="Create Payment" 
+                        type="object"
+                        class="oe_highlight"/>
+                    <button name="delete_payment_dummy" 
+                        string="Delete Payment" 
+                        type="object"
+                        style="margin-left:20px;"/>
+                    <group>
+                        
+                    </group>       
+                    <field name="payment_dummy_ids"> 
+                        <tree editable="bottom">
+                            <field name="check_box"/>
+                            <field name="name"/>
+                            <field name="payment_date"/>
+                            <field name="tax_invoice_number"/>
+                            <field name="tax_invoice_date"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="amount_due" readonly="1"/>
+                        </tree>
+                    </field>
+                </page>
+
+            </xpath>
+
+            <!-- เพิ่มปุ่มพิมพ์รายงาน -->
+            <xpath expr="//button[@name='button_draft']" position="after">
+                <button string="Print Payment Receipt" name="print_payment_receipt_pdf" type="object"/>
+            </xpath>
+
+        </field>
+    </record>
+ 
+</odoo>

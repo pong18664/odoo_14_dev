@@ -1,0 +1,28 @@
+{
+    "name": "nawakij purchase advance",
+    "summary": "navakij",
+    "version": "14.0",
+    "author": "I C E Solutions",
+    "category": "test",
+    "license": "AGPL-3",
+    "depends": [
+        "sale",
+        "stock",
+        "product",
+        "account",
+        "purchase",
+        "purchase_requisition_stock",
+        "purchase_requisition",
+    ],
+    "data": [
+        "views/purchase_view.xml",
+        "views/product_template_view.xml",
+        "views/product_product_view.xml",
+        "views/product_category_view.xml",
+        "views/mrp_production_view.xml",
+        "views/purchase_requisition_view.xml",
+        "views/res_users_view.xml",
+   ],
+    "installable": True,
+    'application': True,
+}

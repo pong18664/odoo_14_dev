@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_order_cancel_view_form_2" model="ir.ui.view">
+        <field name="name">sale.order.cancel.form</field>
+        <field name="model">sale.order.cancel</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                    WARNING! Please confirm if you would like to cancel <field name="order_id" readonly="1"/>
+                </div> 
+                <footer>
+                    <button string="Confirm" name="action_cancel" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

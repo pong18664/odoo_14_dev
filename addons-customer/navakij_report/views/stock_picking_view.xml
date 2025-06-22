@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_toggle_is_locked']" position="after">
+                <button string="Print Receipt (TH)" name="print_receipt_report_TH" type="object" attrs="{'invisible': [('picking_type_name', '!=', 'Receipts')]}"/>
+                <button string="Print Receipt (ENG)" name="print_receipt_report_ENG" type="object" attrs="{'invisible': [('picking_type_name', '!=', 'Receipts')]}"/>
+                <button string="Print Delivery (TH)" name="print_delivery_report_TH" type="object" attrs="{'invisible': [('picking_type_name', '!=', 'Delivery Orders')]}"/>
+                <button string="Print Delivery (ENG)" name="print_delivery_report_ENG" type="object" attrs="{'invisible': [('picking_type_name', '!=', 'Delivery Orders')]}"/>
+                <button string="Print Pick Components (TH)" name="print_pick_components_report_TH" type="object" attrs="{'invisible': [('picking_type_name', '!=', 'Pick Components')]}"/>
+                <button string="Print Pick Components (ENG)" name="print_pick_components_report_ENG" type="object" attrs="{'invisible': [('picking_type_name', '!=', 'Pick Components')]}"/>
+                <button string="Print Store Finished Product (TH)" name="print_store_finished_product_report_TH" type="object" attrs="{'invisible': [('picking_type_name', '!=', 'Store Finished Product')]}"/>
+                <button string="Print Store Finished Product (ENG)" name="print_store_finished_product_report_ENG" type="object" attrs="{'invisible': [('picking_type_name', '!=', 'Store Finished Product')]}"/>
+                <button string="Print Store Raw Materials (TH)" name="print_store_raw_materials_report_TH" type="object" attrs="{'invisible': [('picking_type_name', '!=', 'Store Raw Materials')]}"/>
+                <button string="Print Store Raw Materials (ENG)" name="print_store_raw_materials_report_ENG" type="object" attrs="{'invisible': [('picking_type_name', '!=', 'Store Raw Materials')]}"/>
+            </xpath>
+            <form>
+                <field name="picking_type_name" invisible="1"/>
+            </form>
+        </field>
+    </record>
+
+</odoo>

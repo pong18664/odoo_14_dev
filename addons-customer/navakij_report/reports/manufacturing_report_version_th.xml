@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_manufacturing_version_th_custom">
+
+        <!-- ส่วนหัว -->
+        <div class="header" style="font-size:14px; border-bottom:1px solid;">
+
+            <!-- class row -->
+            <div class="row" style="width:100%; margin-left:0px;">
+                <!-- col ที่ 1 -->
+                <div class="col-2" style="width:150px; max-width:150px; min-width:150px; padding-top:10px;">
+                    <img style="width:100%;" t-att-src="image_data_uri(o.company_id.logo)" />
+                </div>
+                <!-- col ที่ 2 -->
+                <div class="col-8" style="padding-top:80px; text-align:right; width:540px; max-width:540px; min-width:540px;">
+                    <b style="font-size:24px;" t-field="o.company_id.name"/>
+                    <br/>
+                </div>
+                <!-- col ที่ 3 -->
+                <div class="col-2" style="width:180px; max-width:180px; min-width:180px;">
+                    <div class="col" style="text-align:right; margin-right:2px;">
+                        <span style="font-size:14;">หน้า                            
+                            <span style="margin-left:5px" class="page" />
+                            <span style="margin-left:5px"> ของ </span>
+                            <span style="margin-left:5px" class="topage" />
+                            <br/>
+                        </span>
+                    </div>
+                    <div class="col" style="width:150px; max-width:150px; min-width:150px;">
+                        <t t-if="o.company_id.image">
+                            <img style="width:100%;" t-att-src="image_data_uri(o.company_id.image)" />
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; font-size:14;">
+                <span t-field="o.company_id.street"/>
+                <span t-field="o.company_id.zip"/>
+                <br/>
+                <span>โทรศัพท์                    <span t-field="o.company_id.phone"/>
+                    <span t-field="o.company_id.email"/>
+                เลขประจำตัวผู้เสียภาษี                    <span t-field="o.company_id.vat"/>
+                </span>
+                <br/>
+                <br/>
+                <b style="font-size:20px;">ใบการผลิต</b>
+            </div>
+
+            <div class="row">
+                <div class="col-7">
+                    <h3 t-field="o.name"/>
+                    <span>สินค้า : <span t-field="o.product_id.name"/></span><br/>
+                    <span>ผู้รับผิดชอบ : <span t-field="o.user_id.name"/></span><br/>
+                    <span>วันที่พิมพ์ : <span t-esc="o.date_now()"/></span>
+                </div>
+                <div class="col-5">
+                    <br/><br/>
+                    <span>วันที่เริ่ม : <span t-esc="o.get_formatted_date(o.date_planned_start)"/></span><br/>
+                    <span>วันที่สิ้นสุด : -</span>
+                </div>
+            </div>
+            <br/>
+
+        </div>
+
+        <div class="article">
+
+            <h4>แผนการดำเนินงาน</h4>
+            <table style="
+                            font-size:14px; 
+                            text-align:center;
+                            border:1px solid;
+                            ">
+                <thead>
+                    <tr style="border-bottom:1px solid;">
+                        <th style="width:165px; width-min:165px; width-max:165px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">การดำเนินงาน</th>
+                        <th style="width:165px; width-min:165px; width-max:165px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">เวิร์คเซ็นเตอร์</th>
+                        <th style="width:190px; width-min:190px; width-max:190px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">วันที่เริ่ม</th>
+                        <th style="width:190px; width-min:190px; width-max:190px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">วันที่สิ้นสุด</th>
+                        <th style="width:160px; width-min:160px; width-max:160px; padding-top:5px; padding-bottom:5px;">หมายเหตุ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.workorder_ids" t-as="line">
+                        <tr style="border-bottom:1px solid;">
+                            <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <span t-field="line.name"/>
+                            </td>
+                            <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <span t-field="line.workcenter_id.name"/>
+                            </td>
+                            <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <span t-esc="o.get_formatted_date_and_time(line.date_planned_start)"/>
+                            </td>
+                            <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <span t-field="line.date_planned_finished"/>
+                            </td>
+                            <td style="padding-top:5px; padding-bottom:5px;"></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <br/>
+            <h4>สินค้าที่ใช้ในการผลิต</h4>
+            <table style="
+                            font-size:14px; 
+                            text-align:center;
+                            width:100%;
+                            border:1px solid;
+                            ">
+                <thead>
+                    <t t-set="picking_count" t-value="0"/>
+                    <t t-if="o.picking_ids">
+                        <t t-set="picking_count" t-value="len(o.get_transfers(o.picking_ids))"/>
+                    </t>
+                    <tr style="border-bottom:1px solid;">
+                        <th style="width:150px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">สินค้า</th>
+                        <th style="width:150px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">สี</th>
+                        <th style="width:100px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">ความยาว(มม)</th>
+                        <th style="width:100px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">ความกว้าง(มม)</th>
+                        <th style="width:80px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">พื้นที่(ตร.ม)</th>
+                        <th style="width:80px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">ปริมาณ</th>
+                        <t t-if="picking_count == 1">
+                            <th style="width:110px; padding-top:5px; padding-bottom:5px;">
+                                <span t-esc="o.get_transfers(o.picking_ids)[0]"/>
+                                </th>
+                        </t>
+                        <t t-if="picking_count == 2">
+                            <th style="width:110px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <span t-esc="o.get_transfers(o.picking_ids)[1]"/>
+                                </th>
+                            <th style="width:110px; padding-top:5px; padding-bottom:5px;">
+                                <span t-esc="o.get_transfers(o.picking_ids)[0]"/> 
+                                </th>
+                        </t>
+                        <t t-if="picking_count == 3">
+                            <th style="width:100px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <span t-esc="o.get_transfers(o.picking_ids)[2]"/>
+                                </th>
+                            <th style="width:100px; padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <span t-esc="o.get_transfers(o.picking_ids)[1]"/> 
+                                </th>
+                            <th style="width:100px; padding-top:5px; padding-bottom:5px;">
+                                <span t-esc="o.get_transfers(o.picking_ids)[0]"/> 
+                                </th>
+                        </t>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.move_raw_ids" t-as="line">
+                        <tr style="border-bottom:1px solid;">
+                            <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <span t-field="line.product_id.name"/>
+                                </td>
+                            <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <t t-if="o.get_data_product_color(line.product_id)">
+                                    <span t-esc="o.get_data_product_color(line.product_id)"/>
+                                </t>
+                                <t t-else="">
+                                    -    
+                                </t>
+                                </td>
+                            <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <t t-if="o.get_data_product_length(line.product_id)">
+                                    <span t-esc="o.get_data_product_length(line.product_id)"/>
+                                </t>
+                                <t t-else="">
+                                    -
+                                </t>
+                                </td>
+                            <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <t t-if="o.get_data_product_width(line.product_id)">
+                                    <span t-esc="o.get_data_product_width(line.product_id)"/>
+                                </t>
+                                <t t-else="">
+                                    -
+                                </t>
+                                </td>
+                            <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <t t-if="line.product_id.area">
+                                    <span t-field="line.product_id.area"/>
+                                </t>
+                                <t t-else="">
+                                    -
+                                </t>
+                                </td>
+                            <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;">
+                                <span t-field="line.product_uom_qty"/>
+                                </td>
+                            <t t-if="picking_count == 1">
+                                <td style="padding-top:5px; padding-bottom:5px;"></td>
+                                </t>
+                            <t t-if="picking_count == 2">
+                                <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;"></td>
+                                <td style="padding-top:5px; padding-bottom:5px;"></td>
+                                </t>
+                            <t t-if="picking_count == 3">
+                                <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;"></td>
+                                <td style="padding-top:5px; padding-bottom:5px; border-right:1px solid;"></td>
+                                <td style="padding-top:5px; padding-bottom:5px; "></td>
+                                </t>
+                        </tr>
+                    </t>    
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="footer">
+        </div>
+
+    </template> 
+
+
+    <template id="report_manufacturing_th_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="navakij_report.report_manufacturing_version_th_custom" />
+            </t>
+        </t>
+    </template>
+</odoo>

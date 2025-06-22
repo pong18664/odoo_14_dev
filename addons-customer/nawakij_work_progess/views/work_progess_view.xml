@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!-- Form View -->
+        <record id="view_work_progess_form" model="ir.ui.view">
+                <field name="name">work.progess.form</field>
+                <field name="model">work.progess</field>
+                <field name="arch" type="xml">
+                    <form string="Work Progess">
+                        <header>
+                            <button name="create_invoice" string="Create Invoice" type="object"/>
+                            <button name="create_next_work_progess" string="Create Next Work Progess" type="object"/>
+                            <button name="open_group_product_wizard" string="Group Product" type="object"/>
+                        </header>
+                        <sheet>
+                            <div class="oe_button_box" name="button_box">
+                                <button name="action_view_account_move" type="object" class="oe_stat_button" icon="fa-inbox" attrs="{'invisible': [('count_invoice', '=', 0)]}">   
+                                    <field name="count_invoice" string="Invoice" widget="statinfo"/>
+                                </button>
+                            </div>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="name" readonly="1"/>
+                                </h1>
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="project_ids" string="Project Name" />
+                                    <field name="type_count" string="Type" invisible="1"/>
+                                    <field name="count_work_progess" invisible="1"/>
+                                </group>
+                                <group>
+                                    <field name="date" string="Work Progess Date" />
+                                    <field name="source_document" attrs="{'invisible': [('source_document', '=', False)]}"/>
+                                </group>
+                            </group>
+                            <notebook>
+                                <page string="Work Progess Lines">
+                                    <field name="line_ids"> 
+                                        <tree editable='bottom'>
+                                            <field name="product_id" />
+                                            <field name="grouping_product_id" invisible="1"/>
+                                            <field name="qty" />
+                                            <field name="unit_price" />
+                                            <field name="total" />
+                                            <field name="type_count" invisible="1"/>
+
+                                            <field name="name_type_1" invisible="1"/> 
+                                            <field name="percent_1" invisible="1"/>
+                                            <field name="previous_1" optional="show" attrs="{'invisible': [('name_type_1', '=', False)]}"/>
+                                            <field name="qty_1" optional="show" attrs="{'invisible': [('name_type_1', '=', False)]}"/>
+                                            <field name="cumulative_qty_1" optional="show" attrs="{'invisible': [('name_type_1', '=', False)]}"/>
+                                            <field name="price_1" optional="show" attrs="{'invisible': [('name_type_1', '=', False)]}"/>
+                                            <field name="cumulative_price_1" optional="show" attrs="{'invisible': [('name_type_1', '=', False)]}" force_save="1"/>
+
+                                            <field name="name_type_2"  invisible="1"/>
+                                            <field name="percent_2" invisible="1"/>
+                                            <field name="previous_2" optional="show" attrs="{'invisible': [('name_type_2', '=', False)]}"/>
+                                            <field name="qty_2" optional="show" attrs="{'invisible': [('name_type_2', '=', False)]}"/>
+                                            <field name="cumulative_qty_2" optional="show" attrs="{'invisible': [('name_type_2', '=', False)]}"/>
+                                            <field name="price_2" optional="show" attrs="{'invisible': [('name_type_2', '=', False)]}"/>
+                                            <field name="cumulative_price_2" optional="show" attrs="{'invisible': [('name_type_2', '=', False)]}" force_save="1"/>
+
+                                            <field name="name_type_3" invisible="1"/>
+                                            <field name="percent_3" invisible="1"/>
+                                            <field name="previous_3" optional="show" attrs="{'invisible': [('name_type_3', '=', False)]}"/>
+                                            <field name="qty_3" optional="show" attrs="{'invisible': [('name_type_3', '=', False)]}"/>
+                                            <field name="cumulative_qty_3" optional="show" attrs="{'invisible': [('name_type_3', '=', False)]}"/>
+                                            <field name="price_3" optional="show" attrs="{'invisible': [('name_type_3', '=', False)]}"/>
+                                            <field name="cumulative_price_3" optional="show" attrs="{'invisible': [('name_type_3', '=', False)]}" force_save="1"/>
+
+                                            <field name="name_type_4" invisible="1"/>
+                                            <field name="percent_4" invisible="1"/>
+                                            <field name="previous_4" optional="show" attrs="{'invisible': [('name_type_4', '=', False)]}"/>
+                                            <field name="qty_4" optional="show" attrs="{'invisible': [('name_type_4', '=', False)]}"/>
+                                            <field name="cumulative_qty_4" optional="show" attrs="{'invisible': [('name_type_4', '=', False)]}"/>
+                                            <field name="price_4" optional="show" attrs="{'invisible': [('name_type_4', '=', False)]}"/>
+                                            <field name="cumulative_price_4" optional="show" attrs="{'invisible': [('name_type_4', '=', False)]}" force_save="1"/>
+
+                                            <field name="name_type_5" invisible="1"/>
+                                            <field name="percent_5" invisible="1"/>
+                                            <field name="previous_5" optional="show" attrs="{'invisible': [('name_type_5', '=', False)]}"/>
+                                            <field name="qty_5" optional="show" attrs="{'invisible': [('name_type_5', '=', False)]}"/>
+                                            <field name="cumulative_qty_5" optional="show" attrs="{'invisible': [('name_type_5', '=', False)]}"/>
+                                            <field name="price_5" optional="show" attrs="{'invisible': [('name_type_5', '=', False)]}"/>
+                                            <field name="cumulative_price_5" optional="show" attrs="{'invisible': [('name_type_5', '=', False)]}" force_save="1"/>
+
+                                            <field name="name_type_6" invisible="1"/>
+                                            <field name="percent_6" invisible="1"/>
+                                            <field name="previous_6" optional="show" attrs="{'invisible': [('name_type_6', '=', False)]}"/>
+                                            <field name="qty_6" optional="show" attrs="{'invisible': [('name_type_6', '=', False)]}"/>
+                                            <field name="cumulative_qty_6" optional="show" attrs="{'invisible': [('name_type_6', '=', False)]}"/>
+                                            <field name="price_6" optional="show" attrs="{'invisible': [('name_type_6', '=', False)]}"/>
+                                            <field name="cumulative_price_6" optional="show" attrs="{'invisible': [('name_type_6', '=', False)]}" force_save="1"/>
+
+                                            <field name="amount"/>
+                                            <field name="cumulative_amount" optional="show"/>
+                                            <field name="invoice_quantity"/>
+                                            <field name="payment_percent"/>
+                                        </tree>
+                                        <form>
+                                            <group>
+                                                <group>
+                                                    <field name="product_id" />
+                                                    <field name="qty" />
+                                                    <field name="unit_price" />
+                                                    <field name="total" />
+                                                    <field name="name_type_1" invisible="1" />
+                                                    <field name="name_type_2" invisible="1" />
+                                                    <field name="name_type_3" invisible="1" />
+                                                    <field name="name_type_4" invisible="1" />
+                                                    <field name="name_type_5" invisible="1" />
+                                                    <field name="name_type_6" invisible="1" />
+                                                    <field name="percent_1" invisible="1" />
+                                                    <field name="percent_2" invisible="1" />
+                                                    <field name="percent_3" invisible="1" />
+                                                    <field name="percent_4" invisible="1" />
+                                                    <field name="percent_5" invisible="1" />
+                                                    <field name="percent_6" invisible="1" />
+                                                    <field name="qty_1" invisible="1" />
+                                                    <field name="qty_2" invisible="1" />
+                                                    <field name="qty_3" invisible="1" />
+                                                    <field name="qty_4" invisible="1" />
+                                                    <field name="qty_5" invisible="1" />
+                                                    <field name="qty_6" invisible="1" />
+                                                    <field name="price_1" invisible="1" />
+                                                    <field name="price_2" invisible="1" />
+                                                    <field name="price_3" invisible="1" />
+                                                    <field name="price_4" invisible="1" />
+                                                    <field name="price_5" invisible="1" />
+                                                    <field name="price_6" invisible="1" />
+                                                    <field name="amount" invisible="1" />
+                                                    <field name="payment_percent" invisible="1"/>
+                                                </group>
+                                                <group>
+                                                </group>
+                                            </group>
+                                        </form>
+                                    </field>
+                                    <field name="group_type_line_ids">
+                                        <tree editable="0">
+                                            <field name="group_type_1" force_save="1"/>
+                                            <field name="group_type_2" force_save="1"/>
+                                            <field name="group_type_3" force_save="1"/>
+                                            <field name="group_type_4" force_save="1"/>
+                                            <field name="group_type_5" force_save="1"/>
+                                            <field name="group_type_6" force_save="1"/>
+                                        </tree>
+                                        <form>
+                                            <field name="group_type_1"/>
+                                            <field name="group_type_2"/>
+                                            <field name="group_type_3"/>
+                                            <field name="group_type_4"/>
+                                            <field name="group_type_5"/>
+                                            <field name="group_type_6"/>
+                                        </form>
+                                    </field>
+                                </page>
+                            </notebook>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group colspan="4">
+                                    <field name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <group class="oe_right" colspan="2">
+                                    <field name="amount_total" string="Total" widget='monetary'/>
+                                    <field name="cumulative_total" string="Cumulative Total" widget='monetary' attrs="{'invisible': [('source_document', '=', False)]}"/>
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+        </record>
+
+
+        <!-- Tree View -->
+        <record id="view_work_progess_tree" model="ir.ui.view">
+                <field name="name">work.progess.tree</field>
+                <field name="model">work.progess</field>
+                <field name="arch" type="xml">
+                    <tree string="Work Progess">
+                        <field name="name" string="Name" />
+                        <field name="project_ids" string="Project Name" invisible="1"/>
+                        <field name="date" string="Work Progess Date" />
+                    </tree>
+                </field>
+        </record>
+
+
+        <!-- Action To Work Progess -->
+        <record id="action_work_progess" model="ir.actions.act_window">
+                <field name="name">Work Progess</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">work.progess</field>
+                <field name="view_mode">tree,kanban,form</field>
+                <field name="help" type="html">
+                    <p class="o_view_nocontent_smiling_face">
+                        Create your first work progess
+                    </p>
+                </field>
+        </record>
+
+
+        <!-- Action To Work Progess Type -->
+        <record id="action_configuration_work_progess_type" model="ir.actions.act_window">
+            <field name="name">Configuration Work Progess Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">configuration.work.progess.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first work progess type
+                </p>
+            </field>
+        </record>
+
+
+        <!-- Action To Work Progess Project -->
+        <record id="action_configuration_work_progess_project" model="ir.actions.act_window">
+            <field name="name">Configuration Work Progess Project</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">configuration.work.progess.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first work progess project
+                </p>
+            </field>
+        </record>
+
+
+        <!-- Action To Project -->
+        <record id="action_work_progess_project" model="ir.actions.act_window">
+            <field name="name">Project</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">work.progess.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first project
+                </p>
+            </field>
+        </record>
+
+
+        <!-- level 1 -->
+        <!-- button name "Work progess" -->
+        <menuitem id="work_progess_menu_root"
+                name="Work Progess"
+                sequence="1" 
+                web_icon="nawakij_work_progess,static/description/icon.png"/>
+
+
+        <!-- level 2 -->
+        <!-- sub of level 1 "Work progess" -->
+        <!-- button name "Work progess" -->
+        <menuitem id="work_progess_root"
+                name="Work Progess"
+                parent="work_progess_menu_root"
+                sequence="1"
+        />
+
+
+        <!-- level 2 -->
+        <!-- sub of level 1 "Work progess" -->
+        <!-- button name "Project" -->
+        <menuitem id="work_progess_project_root"
+                name="Project"
+                parent="work_progess_menu_root"
+                sequence="2"
+        />
+
+
+        <!-- level 2 -->
+        <!-- sub of level 1 "Work progess" -->
+        <!-- button name "Configuration" -->
+        <menuitem id="configuration_root"
+                name="Configuration"
+                parent="work_progess_menu_root"
+                sequence="3"
+        />
+
+
+        <!-- level 3 -->
+        <!-- sub of level 2 "Work progess" -->
+        <!-- button name "Work progess" -->
+        <!-- Action -->
+        <menuitem id="menu_work_progess"
+                name="Work Progess"
+                parent="work_progess_root"
+                action="action_work_progess"
+                sequence="1"
+        />
+
+
+        <!-- level 3 -->
+        <!-- sub of level 2 "Configuration" -->
+        <!-- button name "Work progess type" -->
+        <!-- Action -->
+        <menuitem id="work_progess_type_menu"
+                name="Work Progess Type"
+                parent="configuration_root"
+                action="action_configuration_work_progess_type"
+                sequence="1"
+        />
+
+        
+        <!-- level 3 -->
+        <!-- sub of level 2 "Configuration" -->
+        <!-- button name "Work progess project" -->
+        <!-- Action -->
+        <menuitem id="work_progess_project_menu"
+                name="Work Progess Project"
+                parent="configuration_root"
+                action="action_configuration_work_progess_project"
+                sequence="2"
+        />
+
+
+        <!-- level 3 -->
+        <!-- sub of level 2 "Project" -->
+        <!-- button name "Project" -->
+        <!-- Action -->
+        <menuitem id="project_menu"
+                name="Project"
+                parent="work_progess_project_root"
+                action="action_work_progess_project"
+                sequence="1"
+        />
+
+
+</odoo> 
