@@ -14,7 +14,7 @@ class PaymentDummy(models.Model):
     name = fields.Char(string="Name", copy=False, default="New", help="เก็บชื่อเอกสารการชำระเงิน")
     payment_date = fields.Date(string="Date", copy=False, default=fields.Date.context_today, help="วันที่ชำระเงิน")
     tax_invoice_number = fields.Char(string="Tax INV Number", copy=False, help="เก็บเลขเอกสารภาษี")
-    tax_invoice_date = fields.Date(string="Tax INV Date", copy=False, help="วันที่เอกสารภาษี")
+    tax_invoice_date = fields.Date(string="Tax INV Date", copy=False, related="tax_invoice_id.tax_invoice_date", help="วันที่เอกสารภาษี")
 
     # field monetary
     amount = fields.Monetary(string="Amount", copy=False, currency_field='currency_id', help="จำนวนเงินที่ชำระ")
@@ -23,6 +23,7 @@ class PaymentDummy(models.Model):
     # field many2one
     account_move_id = fields.Many2one("account.move", string="Account Move",copy=False)
     currency_id = fields.Many2one('res.currency', string="Currency")
+    tax_invoice_id = fields.Many2one("account.move.tax.invoice", string="Tax INV Number", copy=False)
 
     # field related
     account_move_name = fields.Char(string="INV Number", related="account_move_id.name")
