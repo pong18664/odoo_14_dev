@@ -197,7 +197,7 @@
                         <td><span t-esc="count"/></td>
                         <td>
                             <span>ได้รับเงินตามเอกสารเลขที่</span>
-                            <span style="margin-left:5px;" t-field="o.payment_dummy_id.tax_invoice_number"/>
+                            <span style="margin-left:5px;" t-field="o.payment_dummy_id.tax_invoice_id.name"/>
                             <span style="margin-left:5px;">ลงวันที่</span>
                             <span style="margin-left:5px;" t-esc="o.get_formatted_date(o.payment_dummy_id.tax_invoice_date)"/>
                         </td>

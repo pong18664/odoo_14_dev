@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- เพิ่มปุ่ม Send Message Check PO -->
+            <xpath expr="//header" position="inside">
+                <button name="notify_users_approve_po_lv1" 
+                        string="Send Message Check PO" 
+                        type="object" class="oe_highlight" 
+                        attrs="{'invisible': [('check_by_id', '!=', False)]}"
+                />
+            </xpath>
+
+            <!-- เพิ่ม field ส่วนของการลงชื่อในการ approve PO -->
+            <xpath expr="//sheet//group" position="inside">
+                <group>
+                    <field name="check_by_id"/>
+                    <field name="date_approve_1" string="Date Approve 1" readonly="1"/>
+                </group>
+                <group>
+                    <field name="approve_1_by_id"/>
+                    <field name="date_approve_2" string="Date Approve 2" readonly="1"/>
+                </group>
+                <group attrs="{'invisible': [('check_config_po', '=', False)]}">
+                    <field name="approve_2_by_id"/>
+                    <field name="date_approve_3" string="Date Approve 3" readonly="1"/>
+                </group>
+
+            </xpath>
+            
+        </field>
+    </record>
+
+</odoo>

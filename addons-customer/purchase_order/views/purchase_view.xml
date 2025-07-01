@@ -77,9 +77,9 @@
                 <attribute name="optional">show</attribute>
             </xpath>
             <xpath expr="//field[@name='currency_id']" position="after">
-                <field name="check_by_id"/>
+                <!-- <field name="check_by_id"/>
                 <field name="approve_1_by_id"/>
-                <field name="approve_2_by_id" attrs="{'invisible': [('check_config_po', '=', False)]}"/>
+                <field name="approve_2_by_id" attrs="{'invisible': [('check_config_po', '=', False)]}"/> -->
                 <field name="check_config_po" invisible="1"/>
                 <field name="hide_check_1" invisible="1"/>
                 <field name="hide_check_2" invisible="1"/>
