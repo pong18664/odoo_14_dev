@@ -39,7 +39,7 @@ class AccountMove(models.Model):
         currency_field="currency_id",
         help="จำนวนเงินที่ค้างชำระในเอกสารการชำระเงิน dummy"
     )
- 
+
 
     def create_payment_dummy(self):
         """
@@ -62,7 +62,7 @@ class AccountMove(models.Model):
                 "name": self.env['ir.sequence'].next_by_code('payment.dummy'),
                 "payment_date": fields.Date.context_today(rec),
                 "amount": rec.pay_this_round,
-                "amount_due": rec.amount_due_payment_dummy - rec.pay_this_round if rec.amount_due_payment_dummy else rec.net_total - rec.pay_this_round,
+                "amount_due": rec.amount_due_payment_dummy - rec.pay_this_round if rec.amount_due_payment_dummy else rec.amount_total - rec.pay_this_round,
                 "account_move_id": rec.id,
                 "currency_id": rec.currency_id.id,
             }
@@ -77,7 +77,7 @@ class AccountMove(models.Model):
             if rec.amount_due_payment_dummy:
                 rec.amount_due_payment_dummy = rec.amount_due_payment_dummy - rec.pay_this_round
             else:
-                rec.amount_due_payment_dummy = rec.net_total - rec.pay_this_round
+                rec.amount_due_payment_dummy = rec.amount_total - rec.pay_this_round
 
             # reset ค่า pay_this_round กลับเป็น 0.00
             rec.pay_this_round = 0.00
@@ -108,7 +108,7 @@ class AccountMove(models.Model):
             # ทำการ update ค่า amount_due ของ payment.dummy ใน payment_dummy_ids ทียังเหลืออยู่
             for payment_dummy in rec.payment_dummy_ids:
                 amount = amount + payment_dummy.amount
-                payment_dummy.amount_due = rec.net_total - amount
+                payment_dummy.amount_due = rec.amount_total - amount
 
 
     def print_payment_receipt_pdf(self):

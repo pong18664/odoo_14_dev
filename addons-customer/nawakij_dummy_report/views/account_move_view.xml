@@ -24,7 +24,8 @@
                 <page name="dummy receipt" string="Receipt">
                     <group>
                         <group>
-                            <field name="net_total" string="Amount Total"/>
+                            <field name="amount_total" string="Amount Total"/>
+                            <!-- <field name="net_total" string="Amount Total"/> -->
                             <field name="amount_due_payment_dummy" string="Amount Due"/>
                             <field name="pay_this_round" string="Pay This Round"/>
                         </group>
@@ -41,9 +42,9 @@
                         string="Delete Payment" 
                         type="object"
                         style="margin-left:20px;"/>
-                    <group>
-                        
-                    </group>       
+                    
+                    <group> </group>
+
                     <field name="payment_dummy_ids"> 
                         <tree editable="bottom">
                             <field name="check_box"/>
@@ -64,6 +65,28 @@
             <!-- เพิ่มปุ่มพิมพ์รายงาน -->
             <xpath expr="//button[@name='button_draft']" position="after">
                 <button string="Print Payment Receipt" name="print_payment_receipt_pdf" type="object"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Edit tree view -->
+    <record id="account_move_view_tree_inherit" model="ir.ui.view">
+        <field name="name">account.invoice.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree" />
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='activity_ids']" position="after">
+                <field name="tax_invoice_ids" 
+                    widget="many2many_tags" 
+                    optional="show"
+                    attrs="{'invisible': [('move_type', 'not in', 'out_invoice')]}"/>
+                <field name="payment_dummy_ids" 
+                    string="Payment Number" 
+                    widget="many2many_tags"
+                    optional="show"
+                    attrs="{'invisible': [('move_type', 'not in', 'out_invoice')]}"/>
             </xpath>
 
         </field>

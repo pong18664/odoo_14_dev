@@ -59,11 +59,11 @@ class AccountPaymentRegister(models.TransientModel):
             active_ids = self._context.get("active_ids", False)
             move_ids = self.env["account.move"].browse(active_ids)
             wt_tax_line = move_ids.line_ids.filtered(lambda l: l.wt_tax_id)
-            if len(move_ids) > 1 and wt_tax_line:
-                raise UserError(
-                    _(
-                        "You can't register a payment on tree view "
-                        "because there is withholding tax in line."
-                    )
-                )
+            # if len(move_ids) > 1 and wt_tax_line:
+            #     raise UserError(
+            #         _(
+            #             "You can't register a payment on tree view "
+            #             "because there is withholding tax in line."
+            #         )
+            #     )
         return super().default_get(fields_list)

@@ -8,7 +8,10 @@
     "license": "AGPL-3",
     "website": "https://github.com/OCA/l10n-thailand",
     "category": "Localization / Accounting",
-    "depends": ["account"],
+    "depends": [
+        "account",
+        "nawakij_account_move",
+    ],
     "data": [
         "security/ir.model.access.csv",
         "wizard/account_payment_register_views.xml",
