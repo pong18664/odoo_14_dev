@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_update_invoice_tax_wizard_form" model="ir.ui.view">
+        <field name="name">update.invoice.tax.wizard.form</field>
+        <field name="model">update.invoice.tax.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Update Tax in Invoice Lines">
+                <group>
+                    <field name="account_tax_id"/>
+                    <field name="move_id" invisible="1"/>
+                </group>
+                <footer>
+                    <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>
