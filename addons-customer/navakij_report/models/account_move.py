@@ -87,8 +87,8 @@ class AccountMove(models.Model):
                     })
 
                 # ตั้งค่าใหม่สำหรับกลุ่มใหม่
-                first_name = line.name.split('*')[0] if '*' in line.name else line.name
-                second_name = line.name.split('*')[1] if '*' in line.name else ''
+                first_name = line.name.split('**')[0] if '**' in line.name else line.name
+                second_name = line.name.split('**')[1] if '**' in line.name else ''
                 current_group = first_name
                 uom = second_name
                 group_quantity = 0

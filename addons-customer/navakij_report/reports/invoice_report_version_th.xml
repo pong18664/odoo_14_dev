@@ -291,265 +291,334 @@
             </div>
 
             <t t-if="o.inv">
+                <div>
+                    <t t-set="total" t-value="0"/> <!-- ยอด price_subtotal รวมทุกรายการ -->
+                    <t t-set="total_lines" t-value="0"/> <!-- เก็บจำนวนบรรทัดในหน้านั้นๆ -->
+                
+                    <!-- colum lines -->
+                    <t t-set="lines_without_product" t-value="o.get_lines_without_product_id()" />
+                    <t t-foreach="lines_without_product" t-as="line">
+                        <t t-set="count" t-value="count + 1"/>
 
-                <!-- colum lines -->
-                <t t-set="total_lines" t-value="0"/> <!-- เก็บจำนวนบรรทัดในหน้านั้นๆ -->
-                <t t-set="lines_without_product" t-value="o.get_lines_without_product_id()" />
+                        <!-- ตั้งค่า number_lines ตามความยาวของชื่อสินค้าว่าประมาณกี่บรรทัด -->
+                        <t t-if="len(line['name']) > 128">
+                            <t t-set="number_lines" t-value="5"/>
+                        </t>
+                        <t t-elif="len(line['name']) > 96">
+                            <t t-set="number_lines" t-value="4"/>
+                        </t>
+                        <t t-elif="len(line['name']) > 64">
+                            <t t-set="number_lines" t-value="3"/>
+                        </t>
+                        <t t-elif="len(line['name']) > 32">
+                            <t t-set="number_lines" t-value="2"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="number_lines" t-value="1"/>
+                        </t>
 
-                <t t-foreach="lines_without_product" t-as="line">
+                        <t t-set="total_lines" t-value="total_lines + number_lines"/>
 
-                    <!-- ตั้งค่า number_lines ตามความยาวของชื่อสินค้าว่าประมาณกี่บรรทัด -->
-                    <t t-if="len(line['name']) > 128">
-                        <t t-set="number_lines" t-value="5"/>
-                    </t>
-                    <t t-elif="len(line['name']) > 96">
-                        <t t-set="number_lines" t-value="4"/>
-                    </t>
-                    <t t-elif="len(line['name']) > 64">
-                        <t t-set="number_lines" t-value="3"/>
-                    </t>
-                    <t t-elif="len(line['name']) > 32">
-                        <t t-set="number_lines" t-value="2"/>
-                    </t>
-                    <t t-else="">
-                        <t t-set="number_lines" t-value="1"/>
+
+                        <!-- เช็คว่า total_lines เกิน 18 แล้วหรือยัง -->
+                        <t t-if="total_lines > lines_per_page">
+                            <div style="page-break-after: always; height:100px;"></div>
+                            <t t-set="total_lines" t-value="0"/>
+                            <t t-set="total_lines" t-value="total_lines + number_lines"/>
+
+                            <!-- colum head -->
+                            <div class="row" style="width:100%; margin-left:0px; border:1px solid;">
+                                <div style="text-align:center; width:40px; min-width:40px; max-width:40px; border-right:1px solid;">
+                                    <b>ลำดับ</b>
+                                </div>
+                                <div style="text-align:center; width:150px; min-width:150px; max-width:150px; border-right:1px solid;">
+                                    <b>รหัสสินค้า</b>
+                                </div>
+                                <div style="text-align:center; width:245px; min-width:245px; max-width:245px; border-right:1px solid;">
+                                    <b>รายการ</b>
+                                </div>
+                                <div style="text-align:center; width:84px; min-width:84px; max-width:84px; border-right:1px solid;">
+                                    <b>จำนวน</b>
+                                </div>
+                                <div style="text-align:center; width:80px; min-width:80px; max-width:80px; border-right:1px solid;">
+                                    <b>หน่วย</b>
+                                </div>
+                                <div style="text-align:center; width:100px; min-width:100px; max-width:100px; border-right:1px solid;">
+                                    <b>ราคา/หน่วย</b>
+                                </div>
+                                <div style="text-align:center; width:70px; min-width:70px; max-width:70px; border-right:1px solid;">
+                                    <b>ส่วนลด</b>
+                                </div>
+                                <div style="text-align:center; width:101px; min-width:101px; max-width:101px;">
+                                    <b>จำนวนเงิน</b>
+                                </div>
+                            </div>  
+                            
+                            <!-- colum lines -->
+                            <div class="row" style="width:100%; margin-left:0px;">
+                                <div style="text-align:center; width:40px; min-width:40px; max-width:40px;">
+                                    <span t-esc="count"/>
+                                </div>
+                                <div style="text-align:left; width:150px; min-width:150px; max-width:150px;">
+                                    <!-- ส่วนของรหัสสินค้า -->
+                                </div>
+                                <div style="text-align:left; width:245px; min-width:245px; max-width:245px;">
+                                    <span t-esc="line['name']"/>
+                                </div>
+                                <div style="text-align:right; width:84px; min-width:84px; max-width:84px;">
+                                    <span>1</span>
+                                </div>
+                                <div style="text-align:right; width:80px; min-width:80px; max-width:80px;">
+                                    <span t-esc="line['uom']"/>
+                                </div>
+                                <div style="text-align:right; width:100px; min-width:100px; max-width:100px;">
+                                    <span t-esc="'{0:,.2f}'.format(line['price_subtotal'])"/>
+                                </div>
+                                <div style="text-align:right; width:70px; min-width:70px; max-width:70px;">
+                                    <!-- ช่องส่วนลด -->
+                                </div>
+                                <div style="text-align:right; width:101px; min-width:101px; max-width:101px;">
+                                    <span t-esc="'{0:,.2f}'.format(line['price_subtotal'])"/>
+                                </div>
+                            </div>
+                        </t>
+
+                        <t t-else="">
+                            <!-- colum lines -->
+                            <div class="row" style="width:100%; margin-left:0px;">
+                                <div style="text-align:center; width:40px; min-width:40px; max-width:40px;">
+                                    <span t-esc="count"/>
+                                </div>
+                                <div style="text-align:left; width:150px; min-width:150px; max-width:150px;">
+                                    <!-- ส่วนของรหัสสินค้า -->
+                                </div>
+                                <div style="text-align:left; width:245px; min-width:245px; max-width:245px;">
+                                    <span t-esc="line['name']"/>
+                                </div>
+                                <div style="text-align:right; width:84px; min-width:84px; max-width:84px;">
+                                    <span>1</span>
+                                </div>
+                                <div style="text-align:right; width:80px; min-width:80px; max-width:80px;">
+                                    <span t-esc="line['uom']"/>
+                                </div>
+                                <div style="text-align:right; width:100px; min-width:100px; max-width:100px;">
+                                    <span t-esc="'{0:,.2f}'.format(line['price_subtotal'])"/>
+                                </div>
+                                <div style="text-align:right; width:70px; min-width:70px; max-width:70px;">
+                                    <!-- ช่องส่วนลด -->
+                                </div>
+                                <div style="text-align:right; width:101px; min-width:101px; max-width:101px;">
+                                    <span t-esc="'{0:,.2f}'.format(line['price_subtotal'])"/>
+                                </div>
+                            </div>
+                        </t>
                     </t>
 
-                    <t t-set="total_lines" t-value="total_lines + number_lines"/>
+                    <t t-set="number" t-value="lines_per_page - total_lines"/>
+                    <t t-foreach="range(number)" t-as="i">
+                        <div>
+                            <span style="color:white;">.</span>
+                        </div>
+                    </t>
 
-                    <t t-set="count" t-value="count + 1"/>
+                    <!-- ส่วนสรุปยอด -->
                     <div class="row" style="width:100%; margin-left:0px;">
-                        <div style="text-align:center; width:40px; min-width:40px; max-width:40px;">
-                            <span t-esc="count"/>
-                        </div>
-                        <div style="text-align:left; width:150px; min-width:150px; max-width:150px;">
-                            <!-- ส่วนของรหัสสินค้า -->
-                        </div>
-                        <div style="text-align:left; width:245px; min-width:245px; max-width:245px;">
-                            <span t-esc="line['name']"/>
-                        </div>
-                        <div style="text-align:right; width:84px; min-width:84px; max-width:84px;">
-                            <span>1</span>
-                        </div>
-                        <div style="text-align:right; width:80px; min-width:80px; max-width:80px;">
-                            <span t-esc="line['uom']"/>
-                        </div>
-                        <div style="text-align:right; width:100px; min-width:100px; max-width:100px;">
-                            <span t-esc="'{0:,.2f}'.format(line['price_subtotal'])"/>
-                        </div>
-                        <div style="text-align:right; width:70px; min-width:70px; max-width:70px;">
-                            <!-- ช่องส่วนลด -->
-                        </div>
-                        <div style="text-align:right; width:101px; min-width:101px; max-width:101px;">
-                            <span t-esc="'{0:,.2f}'.format(line['price_subtotal'])"/>
-                        </div>
+                        <style>
+                            table td {
+                                border:1px solid;
+                            }
+
+                            /* หมายเหตุ */
+                            table tr:nth-child(1) td:nth-child(1) {
+                                text-align:left;
+                                padding-left:4px;
+                                padding-top: 4px;
+                                width:520px;
+                                min-width: 520px;
+                                max-width: 520px;
+                            }
+
+                            /* รวมเงิน */
+                            table tr:nth-child(1) td:nth-child(2) {
+                                text-align:left;
+                                padding-left:4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                                width:180px;
+                                min-width: 180px;
+                                max-width: 180px;
+                            }
+
+                            /* value รวมเงิน */
+                            table tr:nth-child(1) td:nth-child(3) {
+                                text-align:right;
+                                padding-right:4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                                width:170px;
+                                min-width: 170px;
+                                max-width: 170px;
+                            }
+
+                            /* ภาษีมูลค่าเพิ่ม */
+                            table tr:nth-child(2) td:nth-child(1) {
+                                text-align:left;
+                                padding-left:4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                            }
+
+                            /* value ภาษีมูลค่าเพิ่ม */
+                            table tr:nth-child(2) td:nth-child(2) {
+                                text-align:right;
+                                padding-right:4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                            }
+
+                            /* จำนวนเงินทั้งสิ้น */
+                            table tr:nth-child(3) td:nth-child(1) {
+                                text-align:left;
+                                padding-left:4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                            }
+
+                            /* value จำนวนเงินทั้งสิ้น */
+                            table tr:nth-child(3) td:nth-child(2) {
+                                text-align:right;
+                                padding-right:4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                            }
+
+                            /* หัก เงินประกันผลงาน */
+                            table tr:nth-child(4) td:nth-child(1) {
+                                text-align:left;
+                                padding-left:4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                            }
+
+                            /* value หัก เงินประกันผลงาน */
+                            table tr:nth-child(4) td:nth-child(2) {
+                                text-align:right;
+                                padding-right:4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                            }
+
+                            /* หัก ภาษี ณ ที่จ่าย */
+                            table tr:nth-child(5) td:nth-child(1) {
+                                text-align:left;
+                                padding-left:4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                            }
+
+                            /* value หัก ภาษี ณ ที่จ่าย */
+                            table tr:nth-child(5) td:nth-child(2) {
+                                text-align:right;
+                                padding-right:4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                            }
+
+                            /* text amount */
+                            table tr:nth-child(6) td:nth-child(1) {
+                                text-align:center;
+                                padding-top:4px;
+                                padding-bottom: 4px;
+                            }
+
+                            /* รวมรับสุทธิ */
+                            table tr:nth-child(6) td:nth-child(2) {
+                                text-align:left;
+                                padding-left: 4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                            }
+
+                            /* value รวมเรับสุทธิ */
+                            table tr:nth-child(6) td:nth-child(3) {
+                                text-align:right;
+                                padding-right:4px;
+                                padding-top: 4px;
+                                padding-bottom: 4px;
+                            }
+                        </style>
+                        <table style="table-layout:fixed;">
+                            <tbody>
+                                <tr>
+                                    <td rowspan="5">
+                                        <span><b>หมายเหตุ:</b></span>
+                                        <span t-field="o.narration"/>
+                                    </td>
+                                    <td>
+                                        <span><b>รวมเงิน</b></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><b>ภาษีมูลค่าเพิ่ม 7%</b></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.2f}'.format(o.amount_tax)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><b>จำนวนเงินทั้งสิ้น</b></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><b>หัก เงินประกันผลงาน</b></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.2f}'.format(o.retention)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><b>หัก ภาษี ณ ที่จ่าย</b></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.2f}'.format(o.wht)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>
+                                            <t t-set="amount_to_text" t-value="o.currency_id.with_context({'lang': 'th_TH'}).amount_to_text(o.amount_total)" />
+                                            <t t-set="amount_split" t-value="amount_to_text.split(' ')" />
+                                            <t t-if="len(amount_split) &gt; 2">
+                                                <t t-set="amount_text_thai" t-value="''.join([amount_split[0], 'บาท', amount_split[3], 'สตางค์'])" />
+                                            </t>
+                                            <t t-else="">
+                                                <t t-set="amount_text_thai" t-value="''.join([amount_split[0]])" />
+                                            </t>
+                                            <span style="margin-left:3px;" t-esc=" ''+ amount_text_thai +'' " />
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span><b>รวมรับสุทธิ</b></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.2f}'.format(o.net_total)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                </t>
-
-                <t t-set="number" t-value="lines_per_page - total_lines"/>
-                <t t-foreach="range(number)" t-as="i">
-                    <div>
-                        <span style="color:white;">.</span>
-                    </div>
-                </t>
-
-                <!-- ส่วนสรุปยอด -->
-                <div class="row" style="width:100%; margin-left:0px;">
-                    <style>
-                        table td {
-                            border:1px solid;
-                        }
-
-                        /* หมายเหตุ */
-                        table tr:nth-child(1) td:nth-child(1) {
-                            text-align:left;
-                            padding-left:4px;
-                            padding-top: 4px;
-                            width:520px;
-                            min-width: 520px;
-                            max-width: 520px;
-                        }
-
-                        /* รวมเงิน */
-                        table tr:nth-child(1) td:nth-child(2) {
-                            text-align:left;
-                            padding-left:4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                            width:180px;
-                            min-width: 180px;
-                            max-width: 180px;
-                        }
-
-                        /* value รวมเงิน */
-                        table tr:nth-child(1) td:nth-child(3) {
-                            text-align:right;
-                            padding-right:4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                            width:170px;
-                            min-width: 170px;
-                            max-width: 170px;
-                        }
-
-                        /* ภาษีมูลค่าเพิ่ม */
-                        table tr:nth-child(2) td:nth-child(1) {
-                            text-align:left;
-                            padding-left:4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                        }
-
-                        /* value ภาษีมูลค่าเพิ่ม */
-                        table tr:nth-child(2) td:nth-child(2) {
-                            text-align:right;
-                            padding-right:4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                        }
-
-                        /* จำนวนเงินทั้งสิ้น */
-                        table tr:nth-child(3) td:nth-child(1) {
-                            text-align:left;
-                            padding-left:4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                        }
-
-                        /* value จำนวนเงินทั้งสิ้น */
-                        table tr:nth-child(3) td:nth-child(2) {
-                            text-align:right;
-                            padding-right:4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                        }
-
-                        /* หัก เงินประกันผลงาน */
-                        table tr:nth-child(4) td:nth-child(1) {
-                            text-align:left;
-                            padding-left:4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                        }
-
-                        /* value หัก เงินประกันผลงาน */
-                        table tr:nth-child(4) td:nth-child(2) {
-                            text-align:right;
-                            padding-right:4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                        }
-
-                        /* หัก ภาษี ณ ที่จ่าย */
-                        table tr:nth-child(5) td:nth-child(1) {
-                            text-align:left;
-                            padding-left:4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                        }
-
-                        /* value หัก ภาษี ณ ที่จ่าย */
-                        table tr:nth-child(5) td:nth-child(2) {
-                            text-align:right;
-                            padding-right:4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                        }
-
-                        /* text amount */
-                        table tr:nth-child(6) td:nth-child(1) {
-                            text-align:center;
-                            padding-top:4px;
-                            padding-bottom: 4px;
-                        }
-
-                        /* รวมรับสุทธิ */
-                        table tr:nth-child(6) td:nth-child(2) {
-                            text-align:left;
-                            padding-left: 4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                        }
-
-                        /* value รวมเรับสุทธิ */
-                        table tr:nth-child(6) td:nth-child(3) {
-                            text-align:right;
-                            padding-right:4px;
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                        }
-                    </style>
-                    <table style="table-layout:fixed;">
-                        <tbody>
-                            <tr>
-                                <td rowspan="5">
-                                    <span><b>หมายเหตุ:</b></span>
-                                    <span t-field="o.narration"/>
-                                </td>
-                                <td>
-                                    <span><b>รวมเงิน</b></span>
-                                </td>
-                                <td>
-                                    <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span><b>ภาษีมูลค่าเพิ่ม 7%</b></span>
-                                </td>
-                                <td>
-                                    <span t-esc="'{0:,.2f}'.format(o.amount_tax)"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span><b>จำนวนเงินทั้งสิ้น</b></span>
-                                </td>
-                                <td>
-                                    <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span><b>หัก เงินประกันผลงาน</b></span>
-                                </td>
-                                <td>
-                                    <span t-esc="'{0:,.2f}'.format(o.retention)"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span><b>หัก ภาษี ณ ที่จ่าย</b></span>
-                                </td>
-                                <td>
-                                    <span t-esc="'{0:,.2f}'.format(o.wht)"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>
-                                        <t t-set="amount_to_text" t-value="o.currency_id.with_context({'lang': 'th_TH'}).amount_to_text(o.amount_total)" />
-                                        <t t-set="amount_split" t-value="amount_to_text.split(' ')" />
-                                        <t t-if="len(amount_split) &gt; 2">
-                                            <t t-set="amount_text_thai" t-value="''.join([amount_split[0], 'บาท', amount_split[3], 'สตางค์'])" />
-                                        </t>
-                                        <t t-else="">
-                                            <t t-set="amount_text_thai" t-value="''.join([amount_split[0]])" />
-                                        </t>
-                                        <span style="margin-left:3px;" t-esc=" ''+ amount_text_thai +'' " />
-                                    </span>
-                                </td>
-                                <td>
-                                    <span><b>รวมรับสุทธิ</b></span>
-                                </td>
-                                <td>
-                                    <span t-esc="'{0:,.2f}'.format(o.net_total)"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
+
             </t>
 
             <t t-else="">
@@ -562,31 +631,58 @@
                         <t t-if="line.product_id">
                             <t t-set="total" t-value="total + line.price_subtotal"/>
                             <t t-set="count" t-value="count + 1"/>
-                        
-                            <!-- ตั้งค่า number_lines ตามความยาวของชื่อสินค้าว่าประมาณกี่บรรทัด -->
+
+                            <!-- เก็บค่าคำนวณว่า default_code มีความยาวกี่บรรทัด -->
                             <t t-if="len(line.product_id.default_code) > 128">
-                                <t t-set="number_lines" t-value="5"/>
+                                <t t-set="number_lines_of_product_default_code" t-value="5"/>
                             </t>
                             <t t-elif="len(line.product_id.default_code) > 96">
-                                <t t-set="number_lines" t-value="4"/>
+                                <t t-set="number_lines_of_product_default_code" t-value="4"/>
                             </t>
                             <t t-elif="len(line.product_id.default_code) > 64">
-                                <t t-set="number_lines" t-value="3"/>
+                                <t t-set="number_lines_of_product_default_code" t-value="3"/>
                             </t>
                             <t t-elif="len(line.product_id.default_code) > 32">
-                                <t t-set="number_lines" t-value="2"/>
-                            </t>
+                                <t t-set="number_lines_of_product_default_code" t-value="2"/>
+                            </t> 
                             <t t-else="">
-                                <t t-set="number_lines" t-value="1"/>
+                                <t t-set="number_lines_of_product_default_code" t-value="1"/>
                             </t>
 
-                            <t t-set="total_lines" t-value="total_lines + number_lines"/>
+                            <!-- เก็บค่าคำนวณว่า product name มีความยาวกี่บรรทัด -->
+                            <t t-if="len(line.product_id.name) > 72">
+                                <t t-set="number_lines_of_product_name" t-value="5"/>
+                            </t>
+                            <t t-elif="len(line.product_id.name) > 54">
+                                <t t-set="number_lines_of_product_name" t-value="4"/>
+                            </t>
+                            <t t-elif="len(line.product_id.name) > 36">
+                                <t t-set="number_lines_of_product_name" t-value="3"/>
+                            </t>
+                            <t t-elif="len(line.product_id.name) > 18">
+                                <t t-set="number_lines_of_product_name" t-value="2"/>
+                            </t> 
+                            <t t-else="">
+                                <t t-set="number_lines_of_product_name" t-value="1"/>
+                            </t>
+                            
+                            <t t-if="number_lines_of_product_default_code >= number_lines_of_product_name">
+                                <t t-set="total_lines" t-value="total_lines + number_lines_of_product_default_code"/>
+                            </t>
+                            <t t-else="">
+                                <t t-set="total_lines" t-value="total_lines + number_lines_of_product_name"/>
+                            </t>
 
                             <!-- เช็คว่า total_lines เกิน 18 แล้วหรือยัง -->
                             <t t-if="total_lines > lines_per_page">
                                 <div style="page-break-after: always; height:100px;"></div>
                                 <t t-set="total_lines" t-value="0"/>
-                                <t t-set="total_lines" t-value="total_lines + number_lines"/>
+                                <t t-if="number_lines_of_product_default_code >= number_lines_of_product_name">
+                                    <t t-set="total_lines" t-value="total_lines + number_lines_of_product_default_code"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="total_lines" t-value="total_lines + number_lines_of_product_name"/>
+                                </t>
 
                                 <!-- colum head -->
                                 <div class="row" style="width:100%; margin-left:0px; border:1px solid;">
@@ -658,7 +754,7 @@
                                     <div style="text-align:center; width:40px; min-width:40px; max-width:40px;">
                                         <span t-esc="count"/>
                                     </div>
-                                    <div style="text-align:center; width:150px; min-width:150px; max-width:150px;">
+                                    <div style="text-align:left; width:150px; min-width:150px; max-width:150px;">
                                         <t t-if="line.product_id">
                                             <span t-esc="line.product_id.name"/>
                                         </t>
