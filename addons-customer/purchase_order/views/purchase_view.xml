@@ -76,8 +76,8 @@
             <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="attributes">
                 <attribute name="optional">show</attribute>
             </xpath>
-            <xpath expr="//field[@name='order_line']" position="attributes">
-                <attribute name="attrs">{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}</attribute>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_qty']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'in', 'purchase')]}</attribute>
             </xpath>
             <xpath expr="//field[@name='currency_id']" position="after">
                 <!-- <field name="check_by_id"/>
