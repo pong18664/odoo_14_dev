@@ -40,6 +40,58 @@ class AccountMove(models.Model):
         help="จำนวนเงินที่ค้างชำระในเอกสารการชำระเงิน dummy"
     )
 
+    # fields compute
+    vat_dummy_for_report = fields.Monetary(
+        string="VAT for Report",
+        compute="_compute_vat_dummy_for_report",
+        currency_field="currency_id",
+    )
+    amount_total_dummy_for_report = fields.Monetary(
+        string="Total for Report",
+        compute="_compute_amount_total_dummy_for_report",
+        currency_field="currency_id",
+    )
+    wht_dummy_for_report = fields.Monetary(
+        string="WHT for Report",
+        compute="_compute_wht_dummy_for_report",
+        currency_field="currency_id",
+    )
+    net_total_dummy_for_report = fields.Monetary(
+        string="Net Total for Report",
+        compute="_compute_net_total_dummy_for_report",
+        currency_field="currency_id",
+    )
+
+
+    @api.depends("amount_total_dummy_for_report", "retention", "wht_dummy_for_report")
+    def _compute_net_total_dummy_for_report(self):
+        for rec in self:
+            rec.net_total_dummy_for_report = rec.amount_total_dummy_for_report - rec.retention - rec.wht_dummy_for_report
+
+
+    @api.depends("amount_untaxed", "vat_dummy_for_report")
+    def _compute_amount_total_dummy_for_report(self):
+        for rec in self:
+            rec.amount_total_dummy_for_report = rec.amount_untaxed + rec.vat_dummy_for_report
+
+
+    @api.depends("vat_dummy_id", "amount_untaxed")
+    def _compute_vat_dummy_for_report(self):
+        for rec in self:
+            if rec.vat_dummy_id:
+                rec.vat_dummy_for_report = rec.amount_untaxed * (rec.vat_dummy_id.amount / 100)
+            else:
+                rec.vat_dummy_for_report = 0.00
+
+
+    @api.depends("wht_dummy_id", "amount_untaxed")
+    def _compute_wht_dummy_for_report(self):
+        for rec in self:
+            if rec.wht_dummy_id:
+                rec.wht_dummy_for_report = rec.amount_total * (rec.wht_dummy_id.amount / 100)
+            else:
+                rec.wht_dummy_for_report = 0.00
+
 
     def create_payment_dummy(self):
         """

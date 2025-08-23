@@ -532,21 +532,27 @@
                         <t t-set="count" t-value="count + 1"/>
                     
                         <!-- ตั้งค่า number_lines ตามความยาวของชื่อสินค้าว่าประมาณกี่บรรทัด -->
-                        <t t-if="len(line.product_id.default_code) > 128">
-                            <t t-set="number_lines" t-value="5"/>
-                        </t>
-                        <t t-elif="len(line.product_id.default_code) > 96">
-                            <t t-set="number_lines" t-value="4"/>
-                        </t>
-                        <t t-elif="len(line.product_id.default_code) > 64">
-                            <t t-set="number_lines" t-value="3"/>
-                        </t>
-                        <t t-elif="len(line.product_id.default_code) > 32">
-                            <t t-set="number_lines" t-value="2"/>
+                        <t t-if="line.product_id.default_code">
+                            <t t-if="len(line.product_id.default_code) > 128">
+                                <t t-set="number_lines" t-value="5"/>
+                            </t>
+                            <t t-elif="len(line.product_id.default_code) > 96">
+                                <t t-set="number_lines" t-value="4"/>
+                            </t>
+                            <t t-elif="len(line.product_id.default_code) > 64">
+                                <t t-set="number_lines" t-value="3"/>
+                            </t>
+                            <t t-elif="len(line.product_id.default_code) > 32">
+                                <t t-set="number_lines" t-value="2"/>
+                            </t>
+                            <t t-else="">
+                                <t t-set="number_lines" t-value="1"/>
+                            </t>
                         </t>
                         <t t-else="">
                             <t t-set="number_lines" t-value="1"/>
                         </t>
+
 
                         <t t-set="total_lines" t-value="total_lines + number_lines"/>
 

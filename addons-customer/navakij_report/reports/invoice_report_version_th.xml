@@ -632,19 +632,23 @@
                             <t t-set="total" t-value="total + line.price_subtotal"/>
                             <t t-set="count" t-value="count + 1"/>
 
-                            <!-- เก็บค่าคำนวณว่า default_code มีความยาวกี่บรรทัด -->
-                            <t t-if="len(line.product_id.default_code) > 128">
-                                <t t-set="number_lines_of_product_default_code" t-value="5"/>
+                            <t t-if="line.product_id.default_code">
+                                <t t-if="len(line.product_id.default_code) > 128">
+                                    <t t-set="number_lines_of_product_default_code" t-value="5"/>
+                                </t>
+                                <t t-elif="len(line.product_id.default_code) > 96">
+                                    <t t-set="number_lines_of_product_default_code" t-value="4"/>
+                                </t>
+                                <t t-elif="len(line.product_id.default_code) > 64">
+                                    <t t-set="number_lines_of_product_default_code" t-value="3"/>
+                                </t>
+                                <t t-elif="len(line.product_id.default_code) > 32">
+                                    <t t-set="number_lines_of_product_default_code" t-value="2"/>
+                                </t> 
+                                <t t-else="">
+                                    <t t-set="number_lines_of_product_default_code" t-value="1"/>
+                                </t>
                             </t>
-                            <t t-elif="len(line.product_id.default_code) > 96">
-                                <t t-set="number_lines_of_product_default_code" t-value="4"/>
-                            </t>
-                            <t t-elif="len(line.product_id.default_code) > 64">
-                                <t t-set="number_lines_of_product_default_code" t-value="3"/>
-                            </t>
-                            <t t-elif="len(line.product_id.default_code) > 32">
-                                <t t-set="number_lines_of_product_default_code" t-value="2"/>
-                            </t> 
                             <t t-else="">
                                 <t t-set="number_lines_of_product_default_code" t-value="1"/>
                             </t>

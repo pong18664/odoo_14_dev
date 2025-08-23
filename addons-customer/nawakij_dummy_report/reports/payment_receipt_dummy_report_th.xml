@@ -202,7 +202,7 @@
                             <span style="margin-left:5px;" t-esc="o.get_formatted_date(o.payment_dummy_id.tax_invoice_date)"/>
                         </td>
                         <td>
-                            <span t-field="o.net_total"/>
+                            <span t-field="o.amount_total"/>
                         </td>
                         <td>
                             <span t-esc="'{0:,.2f} ฿'.format(o.payment_dummy_id.amount_due + o.payment_dummy_id.amount)"/>
