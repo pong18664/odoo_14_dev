@@ -278,7 +278,7 @@
                         <div>
                             <group>
                                 <field name="analytic_account_id" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_retention', 'entry'))]}"/>
-                                <field name="internal_detail" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_retention', 'out_refund'))]}"/>
+                                <field name="internal_detail" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_retention', 'out_refund', 'in_invoice'))]}"/>
                                 <field name="delivery_address" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"/>
                             </group>
                         </div>
