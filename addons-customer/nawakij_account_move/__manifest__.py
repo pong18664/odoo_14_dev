@@ -8,7 +8,8 @@
     "depends": [
         'base',
         'account',
-        'nawakij_manufacturing'
+        'nawakij_manufacturing',
+        'l10n_th_withholding_tax'
     ],
     "data": [
         'security/ir.model.access.csv',
