@@ -28,6 +28,22 @@ class AccountMove(models.Model):
             return invoice_data
         
 
+    def old_get_tax_invoice_number(self):
+        """
+        ฟังก์ชั่นนี้ใช้เพื่อดึงหมายเลขใบกำกับภาษีของใบแจ้งหนี้เก่าจากข้อมูลที่เก็บไว้ใน ref
+        """
+        for move in self:
+            invoice_data = move.old_invoice_data()
+            if invoice_data:
+                tax_invoice = invoice_data.select_tax_invoice_id
+                if tax_invoice:
+                    return tax_invoice.tax_invoice_number
+                else:
+                    return "-"
+            else:
+                return "-"
+        
+
     def old_get_invoice_date(self):
         """
         ฟังก์ชั่นนี้ใช้เพื่อดึงวันที่ของใบแจ้งหนี้เก่าจากข้อมูลที่เก็บไว้ใน ref

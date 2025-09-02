@@ -159,7 +159,8 @@
                     <div style="padding-top:3px;">
                         <span style="padding-top:3px;">เลขที่ใบกำกับเดิม</span>
                         <t t-if="o.ref">
-                            <t t-set="inv_origin" t-value="o.ref.split(': ')[1].split(',')[0]" />
+                            <!-- <t t-set="inv_origin" t-value="o.ref.split(': ')[1].split(',')[0]" /> -->
+                            <span t-esc="o.old_get_tax_invoice_number()"/>
                             <span style="margin-left:5px;" t-esc="inv_origin" />
                         </t>
                     </div>
