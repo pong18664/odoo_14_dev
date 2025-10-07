@@ -17,11 +17,11 @@ class StockPicking(models.Model):
         ('state draft', 'Draft'),
         ('state waiting', 'Waiting'),
         ('state ready', 'Ready'),
-    ], string='Check Status', defualt=False ,compute='_check_state_srm')
+    ], string='Check Status', default=False ,compute='_check_state_srm')
     analytic_account_id = fields.Many2one('account.analytic.account', string="Analytic Account")
     count_po = fields.Integer(string="PO", compute="_custom_get_po_count", default=0)
 
-
+                
     def _custom_get_po_count(self):
         """
         function สำหรับนับจํานวน PO

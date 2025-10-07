@@ -23,10 +23,13 @@ class StockPicking(models.Model):
             elif rec.origin:
                 po = self.env['purchase.order'].search([('name', '=', rec.origin)])
                 stock_picking = self.env['stock.picking'].search([('name', '=', rec.origin)])
+                production = self.env['mrp.production'].search([('name', '=', rec.origin)])
                 if po:
                     rec.analytic_account_id = po.analytic_account_id
                 elif stock_picking:
                     rec.analytic_account_id = stock_picking.analytic_account_id
+                elif production:
+                    rec.analytic_account_id = production.analytic_account_id
 
 
     @api.model

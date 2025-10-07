@@ -7,6 +7,7 @@
     "license": "AGPL-3",
     "depends": [
         "account",
+        "nawakij_account_move",
     ],
     "data": [
         'security/ir.model.access.csv',

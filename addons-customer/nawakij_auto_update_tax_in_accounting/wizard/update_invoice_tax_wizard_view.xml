@@ -7,8 +7,10 @@
         <field name="arch" type="xml">
             <form string="Update Tax in Invoice Lines">
                 <group>
-                    <field name="account_tax_id"/>
-                    <field name="move_id" invisible="1"/>
+                    <group>
+                        <field name="account_tax_id"/>
+                        <field name="move_id" invisible="1"/>
+                    </group>
                 </group>
                 <footer>
                     <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>

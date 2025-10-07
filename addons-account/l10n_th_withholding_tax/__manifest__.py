@@ -10,7 +10,7 @@
     "category": "Localization / Accounting",
     "depends": [
         "account",
-        "nawakij_account_move",
+        # "nawakij_account_move",
     ],
     "data": [
         "security/ir.model.access.csv",

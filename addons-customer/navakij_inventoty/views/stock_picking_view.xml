@@ -47,7 +47,8 @@
                 <field name="location_ids" string="Location"/>
             </xpath>
             <xpath expr="//field[@name='location_dest_id']" position="after">
-                <field name="analytic_account_id" attrs="{'invisible':[('check_operation_type', '!=', 'incoming')]}"/>
+                <!-- <field name="analytic_account_id" attrs="{'invisible':[('check_operation_type', '!=', 'incoming')]}"/> -->
+                <field name="analytic_account_id"/>
             </xpath>
             <xpath expr="//div[@class='oe_button_box']" position="inside">
                 <button name="custom_action_to_tree_view_po" string="PO" type="object" icon="fa-inbox" attrs="{'invisible':[('count_po', '=', 0)]}">

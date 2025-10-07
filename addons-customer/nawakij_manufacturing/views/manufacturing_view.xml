@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- View form -->
     <record id="manufacturing_inherit" model="ir.ui.view">
         <field name="name">mrp.production.form</field>
         <field name="model">mrp.production</field>
@@ -16,7 +17,27 @@
             <xpath expr="//button[@name='button_unbuild']" position="after">
                 <button string="Create Bill" name="new_create_vendor_bill" type="object" attrs="{'invisible': [('show_button_create_bill', '!=', True)]}"/>
                 <field name="show_button_create_bill" invisible="1"/>
-            </xpath> 
+            </xpath>
+
+            <xpath expr="//field[@name='bom_id']" position="after">
+                <field name="internal_detail"/>
+                <field name="analytic_account_id"/>
+            </xpath>
+        
+        </field>
+    </record>
+
+    <!-- View tree -->
+    <record id="mrp_production_view_tree_inherit" model="ir.ui.view">
+        <field name="name">mrp.production.tree.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='product_uom_id']" position="after">
+                <field name="internal_detail" optional="show"/>
+                <field name="analytic_account_id" optional="show"/>
+            </xpath>
         
         </field>
     </record>

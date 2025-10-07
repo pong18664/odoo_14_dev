@@ -12,6 +12,8 @@ class MrpProduction(models.Model):
     vendor_bill_count = fields.Integer(string='Vendor Bill Count', compute='_compute_vendor_bill_count')
     show_button_create_bill = fields.Boolean(string='Show Button Create Bill', compute='_compute_show_button_create_bill', store=True)
     state_qc = fields.Boolean(string='State QC',defualt=False, store=True )
+    internal_detail = fields.Text(string='Internal Detail')
+    analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
 
 
     @api.depends('state','state_qc')
