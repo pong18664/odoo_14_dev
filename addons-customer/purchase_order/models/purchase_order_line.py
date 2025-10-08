@@ -132,12 +132,12 @@ class PurchaseOrderLine(models.Model):
                 seller = rec.env['product.supplierinfo'].search([
                     ('product_id' , '=' , rec.product_id.id),
                     ('name', '=' , rec.order_id.partner_id.id)
-                    ])
+                    ], limit=1)
                 if(not seller):           
                     seller = rec.env['product.supplierinfo'].search([
                         ('product_tmpl_id' , '=' , rec.product_id.product_tmpl_id.id),
                         ('name', '=' , rec.order_id.partner_id.id)
-                        ])
+                        ], limit=1)
                     if seller:
                         product_name = seller.product_name
                         product_code = seller.product_code                       
