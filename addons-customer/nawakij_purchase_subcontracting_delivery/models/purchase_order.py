@@ -9,7 +9,7 @@ from odoo.exceptions import AccessError, UserError, ValidationError
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
-
+    po_type_subcontract = fields.Boolean(string="PO Type Subcontract", default=False)
     count_doc_delivery = fields.Integer(string="Count Doc Delivery", compute='_compute_count_doc_delivery', default=0, copy=False)
 
 
@@ -139,14 +139,47 @@ class PurchaseOrder(models.Model):
             return picking
 
 
+    def check_po_type_subcontract(self):
+        """
+        ตรวจสอบว่าในกรณีที่ PO เป็น Subcontract สินค้าในแต่ละรายการมี BoM Type = 'subcontract'
+        """
+        for order in self:
+            if not order.po_type_subcontract:
+                continue
+
+            product_type_is_not_subcontract = []
+
+            for line in order.order_line:
+                product = line.product_id
+
+                if product.variant_bom_ids:
+                    for product_bom in product.variant_bom_ids:
+                        if product_bom.type == 'subcontract':
+                            continue
+                        product_type_is_not_subcontract.append(product.display_name)
+                elif product.bom_ids:
+                    for product_bom in product.bom_ids:
+                        if product_bom.type == 'subcontract':
+                            continue
+                        product_type_is_not_subcontract.append(product.display_name)
+                else:
+                    product_type_is_not_subcontract.append(product.display_name)
+
+            if product_type_is_not_subcontract:
+                unique_products = sorted(set(product_type_is_not_subcontract))
+                product_list = "\n".join(f"- {name}" for name in unique_products)
+                raise UserError(_("Some products do not have BoM Type = 'subcontract':\n%s") % product_list)
+
+            order.create_doc_delivery()
+
+
     def button_confirm(self):
         """
         Override function button_confirm
-        เพิ่มการเรียกใช้ function create_doc_delivery หลังจาก confirm PO
+        เพิ่มการเรียกใช้ function check_po_type_subcontract ก่อน confirm PO
         """
+        self.check_po_type_subcontract()
         rec = super(PurchaseOrder, self).button_confirm()
-        for order in self:
-            order.create_doc_delivery() # เรียกใช้ function create_doc_delivery
         return rec
     
 

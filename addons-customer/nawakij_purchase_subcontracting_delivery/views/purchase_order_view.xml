@@ -15,6 +15,10 @@
                 </button>
             </xpath>
 
+            <xpath expr="//field[@name='fiscal_position_id']" position="after">
+                <field name="po_type_subcontract"/>
+            </xpath>
+
         </field>
     </record>
     
