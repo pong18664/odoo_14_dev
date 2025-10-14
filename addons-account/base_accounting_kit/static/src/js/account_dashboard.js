@@ -1819,15 +1819,37 @@ odoo.define('AccountingDashboard.AccountingDashboard', function(require) {
                 });
         },
 
+        // format_currency: function(currency, amount) {
+        //     if (typeof(amount) != 'number') {
+        //         amount = parseFloat(amount);
+        //     }
+        //     var formatted_value = (parseInt(amount)).toLocaleString(currency, {
+        //         minimumFractionDigits: 2
+        //     })
+        //     if (currency === "after") {
+        //         return formatted_value += ' ' + currency.symbol;
+        //     } else {
+        //         return currency.symbol + ' ' + formatted_value;
+        //     }
+        // },
         format_currency: function(currency, amount) {
             if (typeof(amount) != 'number') {
                 amount = parseFloat(amount);
             }
-            var formatted_value = (parseInt(amount)).toLocaleString(currency, {
+            
+            // ตรวจสอบให้แน่ใจว่า currency เป็นอ็อบเจกต์และมี symbol
+            if (!currency || typeof currency.symbol === 'undefined') {
+                console.error("Invalid currency object or missing symbol:", currency);
+                return amount; // หรือสามารถส่งค่าที่ไม่จัดรูปแบบกลับไป
+            }
+        
+            var formatted_value = (parseInt(amount)).toLocaleString(undefined, {
                 minimumFractionDigits: 2
-            })
-            if (currency === "after") {
-                return formatted_value += ' ' + currency.symbol;
+            });
+            
+            // ใช้ currency.symbol เพื่อสร้างผลลัพธ์ที่จัดรูปแบบ
+            if (currency.position === "after") {
+                return formatted_value + ' ' + currency.symbol;
             } else {
                 return currency.symbol + ' ' + formatted_value;
             }

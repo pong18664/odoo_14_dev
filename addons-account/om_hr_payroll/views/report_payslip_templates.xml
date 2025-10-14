@@ -52,7 +52,7 @@
                                     <strong>Reference</strong>
                                 </td>
                                 <td>
-                                    <span t-field="o.number"/>
+                                    <span t-field="o.name"/>
                                 </td>
                                 <td>
                                     <strong>Bank Account</strong>

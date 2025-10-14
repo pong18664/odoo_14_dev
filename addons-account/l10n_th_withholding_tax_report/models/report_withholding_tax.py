@@ -25,10 +25,11 @@ class WithHoldingTaxReport(models.TransientModel):
         ondelete="cascade",
     )
     date_range_id = fields.Many2one(
-        comodel_name="date.range", string="Date range", required=True
+        comodel_name="date.range", string="Date range"
     )
     date_from = fields.Date()
     date_to = fields.Date()
+    show_cancel = fields.Boolean(string="Show Cancelled")
     results = fields.Many2many(
         comodel_name="withholding.tax.cert.line",
         string="Results",
@@ -139,6 +140,9 @@ class WithHoldingTaxReport(models.TransientModel):
             ("cert_id.date", ">=", self.date_from),
             ("cert_id.date", "<=", self.date_to),
             ("cert_id.company_partner_id", "=", self.company_id.partner_id.id),
-            ("cert_id.state", "!=", "draft"),
+            # ("cert_id.state", "!=", "draft"),
+            ("cert_id.state", "=", "done"),
         ]
-        self.results = Result.search(domain)
+        # self.results = Result.search(domain)
+        records = Result.search(domain)
+        self.results = records.sorted(lambda r: r.cert_id.date)

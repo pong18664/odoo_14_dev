@@ -3,7 +3,7 @@
         <field name="name">tax.report.wizard.form</field>
         <field name="model">tax.report.wizard</field>
         <field name="arch" type="xml">
-            <form>
+            <form> 
                 <group name="criteria">
                     <group>
                         <field
@@ -15,12 +15,15 @@
                             name="tax_id"
                             options="{'no_create_edit': True, 'no_open': True}"
                         />
+                        <field name="show_cancel" />
                     </group>
                     <group>
                         <field
                             name="date_range_id"
                             options="{'no_create_edit': True, 'no_open': True}"
                         />
+                        <field name="date_from" />
+                        <field name="date_to" />
                     </group>
                 </group>
                 <footer>

@@ -89,11 +89,24 @@
                 <t t-set="n" t-value="1" />
                 <t t-set="total_base" t-value="0.00" />
                 <t t-set="total_tax" t-value="0.00" />
+                <t t-set="base_amount_negative" t-value="0.00"/>
+                <t t-set="tax_amount_negative" t-value="0.00"/>
+                <t t-set="total_amount_negative" t-value="0.00"/>
                 <t t-foreach="o.results" t-as="line">
                     <t t-call="l10n_th_tax_report.report_tax_report_lines" />
                     <t t-set="n" t-value="n+1" />
                     <t t-set="total_base" t-value="total_base+line.tax_base_amount" />
                     <t t-set="total_tax" t-value="total_tax+line.tax_amount" />
+                    <t t-if="'Reversal of' in line.name">
+                        <t t-set="base_amount_negative" t-value="base_amount_negative + line.tax_base_amount"/>
+                        <t t-set="tax_amount_negative" t-value="tax_amount_negative + line.tax_amount"/>
+                        <t t-set="total_amount_negative" t-value="total_amount_negative + (line.tax_base_amount + line.tax_amount)"/>
+                    </t>
+                    <t t-else="">
+                        <t t-set="base_amount_negative" t-value="base_amount_negative + 0"/>
+                        <t t-set="tax_amount_negative" t-value="tax_amount_negative + 0"/>
+                        <t t-set="total_amount_negative" t-value="total_amount_negative + 0"/>
+                    </t>
                 </t>
                 <!-- Display total lines -->
                 <t t-call="l10n_th_tax_report.report_tax_report_total_lines" />
@@ -103,12 +116,20 @@
     <template id="l10n_th_tax_report.report_tax_report_filters">
         <div class="act_as_table data_table" style="width: 100%;">
             <div class="act_as_row labels">
+                <div class="act_as_cell">Date From</div>
+                <div class="act_as_cell">Date To</div>
                 <div class="act_as_cell">Period</div>
                 <div class="act_as_cell">Partner</div>
                 <div class="act_as_cell">Tax ID</div>
                 <div class="act_as_cell">Branch ID</div>
             </div>
             <div class="act_as_row">
+                <div class="act_as_cell">
+                    <span t-esc="o.date_from.strftime('%d/%m/%Y')" />
+                </div>
+                <div class="act_as_cell">
+                    <span t-esc="o.date_to.strftime('%d/%m/%Y')" />
+                </div>
                 <div class="act_as_cell">
                     <span t-field="o.date_range_id.display_name" />
                 </div>
@@ -135,6 +156,7 @@
                 <div class="act_as_cell">Branch ID</div>
                 <div class="act_as_cell">Base Amount</div>
                 <div class="act_as_cell">Tax Amount</div>
+                <div class="act_as_cell">Total Amount</div>
                 <div class="act_as_cell">Doc Ref.</div>
             </div>
         </div>
@@ -145,26 +167,55 @@
                 <t t-esc="n" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.tax_date" />
+                <t t-set="date" t-value="line.tax_date.split('-')"/>
+                <span><span t-esc="date[2]"/>/<span t-esc="date[1]"/>/<span t-esc="date[0]"/></span>
+                <!-- <t t-esc="line.tax_date"/>  -->
             </div>
             <div class="act_as_cell left">
                 <t t-esc="line.tax_invoice_number" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.partner_id.display_name" />
+                <t t-esc="line.partner_id.display_name" /> 
             </div>
             <div class="act_as_cell left">
                 <t t-esc="line.partner_id.vat" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.partner_id.branch" />
+                <!-- <t t-esc="line.partner_id.branch" /> -->
+                <t t-if="line.partner_id.display_name">
+                    <t t-if="not 'สาขาที่' in line.partner_id.display_name">
+                        <span>สำนักงานใหญ่</span>
+                    </t>
+                    <t t-else="">
+                        <t t-set="branch_name" t-value="line.partner_id.display_name.split('สาขาที่')"/>
+                        <span t-esc="branch_name[1]"/>
+                    </t>
+                </t>
             </div>
             <div class="act_as_cell amount">
-                <t t-esc="'{0:,.2f}'.format(line.tax_base_amount)" />
+                <t t-if="'Reversal of' in line.name">
+                    <t t-esc="'{0:,.2f}'.format(line.tax_base_amount * -1)" />
+                </t>
+                <t t-else="">
+                    <t t-esc="'{0:,.2f}'.format(line.tax_base_amount)" />
+                </t>
             </div>
             <div class="act_as_cell amount">
-                <t t-esc="'{0:,.2f}'.format(line.tax_amount)" />
+                <t t-if="'Reversal of' in line.name">
+                    <t t-esc="'{0:,.2f}'.format(line.tax_amount * -1)" />
+                </t>
+                <t t-else="">
+                    <t t-esc="'{0:,.2f}'.format(line.tax_amount)" />
+                </t>
             </div>
+            <div class="act_as_cell amount">
+                <t t-if="'Reversal of' in line.name">
+                    <t t-esc="'{0:,.2f}'.format((line.tax_base_amount + line.tax_amount) * -1)" />
+                </t>
+                <t t-else="">
+                    <t t-esc="'{0:,.2f}'.format(line.tax_base_amount + line.tax_amount)" />
+                </t>
+            </div>            
             <div class="act_as_cell left">
                 <t t-esc="line.name" />
             </div>
@@ -179,10 +230,13 @@
             <div class="act_as_cell" />
             <div class="act_as_cell" />
             <div class="act_as_cell amount">
-                <t t-esc="'{0:,.2f}'.format(total_base)" />
+                <t t-esc="'{0:,.2f}'.format(total_base - base_amount_negative)" />
             </div>
             <div class="act_as_cell amount">
-                <t t-esc="'{0:,.2f}'.format(total_tax)" />
+                <t t-esc="'{0:,.2f}'.format(total_tax - tax_amount_negative)" />
+            </div>
+            <div class="act_as_cell amount">
+                <t t-esc="'{0:,.2f}'.format((total_base + total_tax) - total_amount_negative)" />
             </div>
             <div class="act_as_cell" />
         </div>
