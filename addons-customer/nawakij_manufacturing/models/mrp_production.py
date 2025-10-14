@@ -151,8 +151,9 @@ class MrpProduction(models.Model):
 
     
     def button_mark_done(self):
-        mrp = super(MrpProduction, self).button_mark_done()
-        if self.state == 'done':
-            self.new_create_journal()
-        return mrp
+        mrp_records = super(MrpProduction, self).button_mark_done()
+        for production in self:
+            if production.state == 'done':
+                production.new_create_journal()
+        return mrp_records
 
