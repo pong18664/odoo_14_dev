@@ -41,9 +41,8 @@ class PurchaseOrder(models.Model):
         function สร้างเอกสาร Delivery เพื่อส่งวัตถุดิบไปยังผู้รับจ้างช่วง
         เงื่อนไข:
             - ตรวจสอบ order_line ว่ามีค่าไหม ถ้าไม่มีให้ return ออกไปเลย
-            - ตรวจสอบ product ใน order line ว่า มี BoM type = 'subcontract' และ order.partner_id ใน subcontractor_ids ไหม
+            - ตรวจสอบ product ใน order line ว่า variant_bom_id มีค่าไหม
                 - ถ้า condition นี้เป็น True ให้เก็บ bom_line ของ product เหล่านั้นไว้ใน list products_type_subcontract
-            - ตรวจสอบ list products_type_subcontract ว่ามีค่าไหม ถ้าไม่มีค่า ให้ return ออกไปเลย
         ขั้นตอนการสร้าง:
             - search operation type (Delivery) เก็บไว้ในตัวแปร operation_type
             - กําหนดต้นทาง/ปลายทาง
@@ -57,36 +56,27 @@ class PurchaseOrder(models.Model):
         for order in self:
             if not order.order_line: # ไม่มี order line ใน PO ไม่ต้องทำอะไรให้ออกจาก function นี้
                 return
-
+            
             products_type_subcontract = [] # เก็บ product ที่มี BoM type = 'subcontract'
             for line in order.order_line:
-                
-                if line.product_id.variant_bom_ids:
-                    for product_boms in line.product_id.variant_bom_ids:
+                      
+                if line.variant_bom_id: # ถ้า variant_bom_ids มีค่า
+                    for product_component in line.variant_bom_id.bom_line_ids:
+                        products_type_subcontract.append({
+                            'product_id': product_component.product_id.id,
+                            'display_name': product_component.product_id.display_name,
+                            'qty': product_component.product_qty * line.product_qty,
+                            'uom_id': product_component.product_uom_id.id,
+                        })
 
-                        if product_boms.type == 'subcontract' and order.partner_id in product_boms.subcontractor_ids:
-                            for product_component in product_boms.bom_line_ids:
-                                products_type_subcontract.append({
-                                    'product_id': product_component.product_id.id,
-                                    'display_name': product_component.product_id.display_name,
-                                    'qty': product_component.product_qty * line.product_qty,
-                                    'uom_id': product_component.product_uom_id.id,
-                                })
-
-                else:
-                    for product_boms in line.product_id.bom_ids:
-
-                        if product_boms.type == 'subcontract' and order.partner_id in product_boms.subcontractor_ids:
-                            for product_component in product_boms.bom_line_ids:
-                                products_type_subcontract.append({
-                                    'product_id': product_component.product_id.id,
-                                    'display_name': product_component.product_id.display_name,
-                                    'qty': product_component.product_qty * line.product_qty,
-                                    'uom_id': product_component.product_uom_id.id,
-                                })
-
-            if not products_type_subcontract:
-                return
+            # ตรวจสอบ list products_type_subcontract ที่มี product_id ซ้ำกัน และรวม qty ของ product เหล่านั้น
+            # temp_dict = {}
+            # for item in products_type_subcontract:
+            #     product_id = item['product_id']
+            #     if product_id in temp_dict:
+            #         temp_dict[product_id]['qty'] += item['qty']
+            #     else:
+            #         temp_dict[product_id] = item
 
             # search operation type (Delivery)
             operation_type = self.env['stock.picking.type'].search([
@@ -121,6 +111,7 @@ class PurchaseOrder(models.Model):
             # เตรียมข้อมูลการสร้าง stock.move
             move_values = []
             for line in products_type_subcontract:
+            # for line in temp_dict.values():
                 move_values.append((0, 0, {
                     'product_id': line['product_id'],
                     'product_uom_qty': line['qty'],
@@ -141,34 +132,24 @@ class PurchaseOrder(models.Model):
 
     def check_po_type_subcontract(self):
         """
-        ตรวจสอบว่าในกรณีที่ PO เป็น Subcontract สินค้าในแต่ละรายการมี BoM Type = 'subcontract'
+        function สําหรับตรวจสอบ product ใน order_line ว่ามี BoM หรือไม่
+        field variant_bom_id ไม่มีค่า = ไม่มี BoM
+        และแจ้งเตือนรายการที่ไม่มี BoM
         """
         for order in self:
             if not order.po_type_subcontract:
                 continue
 
-            product_type_is_not_subcontract = []
+            product_type_is_not_subcontract = [] # เก็บ product ที่ไม่มี BoM
 
             for line in order.order_line:
-                product = line.product_id
-
-                if product.variant_bom_ids:
-                    for product_bom in product.variant_bom_ids:
-                        if product_bom.type == 'subcontract':
-                            continue
-                        product_type_is_not_subcontract.append(product.display_name)
-                elif product.bom_ids:
-                    for product_bom in product.bom_ids:
-                        if product_bom.type == 'subcontract':
-                            continue
-                        product_type_is_not_subcontract.append(product.display_name)
-                else:
-                    product_type_is_not_subcontract.append(product.display_name)
+                if not line.variant_bom_id:
+                    product_type_is_not_subcontract.append(line.product_id.display_name)
 
             if product_type_is_not_subcontract:
                 unique_products = sorted(set(product_type_is_not_subcontract))
                 product_list = "\n".join(f"- {name}" for name in unique_products)
-                raise UserError(_("Some products do not have BoM Type = 'subcontract':\n%s") % product_list)
+                raise UserError(_("Check the BOM in the list.:\n%s") % product_list)
 
             order.create_doc_delivery()
 
@@ -182,7 +163,12 @@ class PurchaseOrder(models.Model):
         rec = super(PurchaseOrder, self).button_confirm()
         return rec
     
-
     
-
-    
+    @api.onchange('partner_id')
+    def _get_variant_bom(self):
+        """
+        เรียกใช้ function _get_variant_bom() ใน purchase.order.line
+        """
+        for line in self.order_line:
+            line._get_variant_bom()
+            

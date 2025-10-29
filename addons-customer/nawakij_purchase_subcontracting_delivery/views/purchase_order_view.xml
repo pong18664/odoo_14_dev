@@ -15,8 +15,19 @@
                 </button>
             </xpath>
 
+            <!-- check box สำหรับระบุ po type subcontract -->
             <xpath expr="//field[@name='fiscal_position_id']" position="after">
                 <field name="po_type_subcontract"/>
+            </xpath>
+
+            <!-- แทรก field ใน order_line -->
+            <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="after">
+                <field name="variant_bom_id"
+                    domain="[
+                        ('type', '=', 'subcontract'),
+                        ('product_id', '=', product_id),
+                        ]"
+                    options="{'no_create': True}"/>
             </xpath>
 
         </field>
