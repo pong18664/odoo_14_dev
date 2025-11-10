@@ -2,6 +2,7 @@ import logging
 import re
 
 from odoo import api, fields, models, _
+from datetime import timedelta
 
 _logger = logging.getLogger(__name__)
 
@@ -17,6 +18,27 @@ class AccountMove(models.Model):
         help=""
     )
 
+
+    @api.model
+    def compute_due_date(self, invoice_date, payment_term_days):
+        """
+        คำนวณวันครบกำหนดชำระเงิน (Due Date)
+        จากวันที่ใบแจ้งหนี้ + จำนวนวันในเงื่อนไขการชำระเงิน
+
+        Parameters:
+            invoice_date (datetime.date): วันที่ของใบแจ้งหนี้
+            payment_term_days (int): จำนวนวันของเงื่อนไขการชำระเงิน (เช่น 15)
+
+        Returns:
+            str: วันที่ครบกำหนดในรูปแบบ 'dd/mm/YYYY'
+        """
+        if not invoice_date or not payment_term_days:
+            return ""
+
+        # แปลงเป็น datetime และบวกจำนวนวันเข้าไป
+        due_date = fields.Date.from_string(invoice_date) + timedelta(days=payment_term_days)
+        return due_date.strftime("%d/%m/%Y")
+    
 
     def old_invoice_data(self):
         """

@@ -243,8 +243,11 @@
                             </t>
                         </td>
                         <td>
-                            <t t-if="o.invoice_date_due">
-                                <span t-esc="o.get_formatted_date(o.invoice_date_due)"/>
+                            <t t-if="o.invoice_payment_term_id">
+                                <span t-esc="o.compute_due_date(o.invoice_date, o.invoice_payment_term_id.line_ids[0].days if o.invoice_payment_term_id else 0)"/>
+                            </t>
+                            <t t-if="o.invoice_date_due and not o.invoice_payment_term_id">
+                                <span t-esc="o.get_formatted_date(o.invoice_date_due)"/>                                
                             </t>
                             <t t-else="">
                                 <span style="color:white;">.</span>
