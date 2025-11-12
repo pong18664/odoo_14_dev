@@ -82,7 +82,7 @@ class PurchaseOrder(models.Model):
             operation_type = self.env['stock.picking.type'].search([
                 ('name', '=', 'Delivery Orders'),
                 ('sequence_code', '=', 'OUT'),
-                ('warehouse_id', '=', order.picking_type_id.warehouse_id.id),
+                ('warehouse_id', '=', 'Nawakij'),
                 ('code', '=', 'outgoing')
             ], limit=1)
 
@@ -143,7 +143,7 @@ class PurchaseOrder(models.Model):
             product_type_is_not_subcontract = [] # เก็บ product ที่ไม่มี BoM
 
             for line in order.order_line:
-                if not line.variant_bom_id:
+                if line.product_id and not line.variant_bom_id:
                     product_type_is_not_subcontract.append(line.product_id.display_name)
 
             if product_type_is_not_subcontract:
