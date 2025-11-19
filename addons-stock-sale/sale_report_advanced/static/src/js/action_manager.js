@@ -16,11 +16,22 @@ ActionManager.include({
         });
         return def;
     },
+    _isSaleAdvancedXlsx: function (action) {
+        const data = action.data || {};
+        return (
+            action.report_type === 'xlsx' &&
+            data.model &&
+            data.options &&
+            data.output_format &&
+            data.report_name
+        );
+    },
     _handleAction: function (action, options) {
-        if (action.report_type === 'xlsx') {
+        // if (action.report_type === 'xlsx') {
+        if (this._isSaleAdvancedXlsx(action)) {
             return this._executexlsxReportDownloadAction(action, options);
         }
         return this._super.apply(this, arguments);
-    	},
-    });
-  });
+    },
+});
+});

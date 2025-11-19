@@ -3,7 +3,7 @@
 
 import logging
 
-from odoo import models
+from odoo import fields, models
 
 from odoo.addons.report_xlsx_helper.report.report_xlsx_format import (
     FORMATS,
@@ -66,7 +66,16 @@ class ReportTaxReportXlsx(models.TransientModel):
                 },
                 "width": 21,
             },
-            "9_doc_ref": {
+            "9_total_amount": {
+                "header": {"value": "Total Amount"},
+                "data": {
+                    "value": self._render("total_amount"),
+                    "format": FORMATS["format_tcell_amount_right"],
+                },
+                "width": 21,
+            },
+            "10_doc_ref": {
+            # "9_doc_ref": {
                 "header": {"value": "Doc Ref."},
                 "data": {"value": self._render("doc_ref")},
                 "width": 18,
@@ -98,29 +107,47 @@ class ReportTaxReportXlsx(models.TransientModel):
         # title
         row_pos = self._write_ws_title(ws, row_pos, ws_params, True)
         # company data
-        ws.write_column(
-            row_pos, 1, ["Period :", "Partner :"], FORMATS["format_left_bold"]
-        )
-        ws.write_column(
-            row_pos,
-            2,
-            [
-                (objects.date_range_id.display_name) or "",
-                (objects.company_id.display_name) or "",
-            ],
-        )
-        ws.write_column(
-            row_pos, 5, ["Tax ID :", "Branch ID :"], FORMATS["format_left_bold"]
-        )
-        ws.write_column(
-            row_pos,
-            6,
-            [
-                (objects.company_id.partner_id.vat) or "",
-                (objects.company_id.partner_id.branch) or "",
-            ],
-        )
-        row_pos += 3
+        # ws.write_column(
+        #     row_pos, 1, ["Period :", "Partner :"], FORMATS["format_left_bold"]
+        # )
+        # ws.write_column(
+        #     row_pos,
+        #     2,
+        #     [
+        #         (objects.date_range_id.display_name) or "",
+        #         (objects.company_id.display_name) or "",
+        #     ],
+        # )
+        # ws.write_column(
+        #     row_pos, 5, ["Tax ID :", "Branch ID :", "End Date :"], FORMATS["format_left_bold"]
+        # )
+        # ws.write_column(
+        #     row_pos,
+        #     6,
+        #     [
+        #         (objects.company_id.partner_id.vat) or "",
+        #         (objects.company_id.partner_id.branch) or "",
+        #     ],
+        # )
+        # row_pos += 3
+        report = objects[:1]
+        left_labels = ["Period :", "Partner :", "Start Date :"]
+        left_values = [
+            (report.date_range_id.display_name) if report else "",
+            (report.company_id.display_name) if report else "",
+            fields.Date.to_string(report.date_from) if report and report.date_from else "",
+        ]
+        right_labels = ["Tax ID :", "Branch ID :", "End Date :"]
+        right_values = [
+            (report.company_id.partner_id.vat) if report else "",
+            (report.company_id.partner_id.branch) if report else "",
+            fields.Date.to_string(report.date_to) if report and report.date_to else "",
+        ]
+        ws.write_column(row_pos, 1, left_labels, FORMATS["format_left_bold"])
+        ws.write_column(row_pos, 2, left_values)
+        ws.write_column(row_pos, 5, right_labels, FORMATS["format_left_bold"])
+        ws.write_column(row_pos, 6, right_values)
+        row_pos += max(len(left_labels), len(right_labels)) + 1
         # vat report table
         row_pos = self._write_line(
             ws,
@@ -130,12 +157,21 @@ class ReportTaxReportXlsx(models.TransientModel):
             default_format=FORMATS["format_theader_blue_left"],
         )
         ws.freeze_panes(row_pos, 0)
+        grand_base = 0.00
+        grand_tax = 0.00
+        grand_total = 0.00
         for obj in objects:
-            total_base = 0.00
-            total_tax = 0.00
+            # total_base = 0.00
+            # total_tax = 0.00
             for line in obj.results:
-                total_base += line.tax_base_amount
-                total_tax += line.tax_amount
+                # total_base += line.tax_base_amount
+                # total_tax += line.tax_amount
+                base_amount = line.tax_base_amount or 0.00
+                tax_amount = line.tax_amount or 0.00
+                line_total = base_amount + tax_amount
+                grand_base += base_amount
+                grand_tax += tax_amount
+                grand_total += line_total
                 row_pos = self._write_line(
                     ws,
                     row_pos,
@@ -147,9 +183,13 @@ class ReportTaxReportXlsx(models.TransientModel):
                         "tax_invoice_number": line.tax_invoice_number or "",
                         "partner_name": line.partner_id.display_name or "",
                         "partner_vat": line.partner_id.vat or "",
-                        "partner_branch": line.partner_id.branch or "",
-                        "tax_base_amount": line.tax_base_amount or 0.00,
-                        "tax_amount": line.tax_amount or 0.00,
+                        # "partner_branch": line.partner_id.branch or "",
+                        # "tax_base_amount": line.tax_base_amount or 0.00,
+                        # "tax_amount": line.tax_amount or 0.00,
+                        "partner_branch": self._prepare_partner_branch(line.partner_id),
+                        "tax_base_amount": base_amount,
+                        "tax_amount": tax_amount,
+                        "total_amount": line_total,
                         "doc_ref": line.name or "",
                     },
                     default_format=FORMATS["format_tcell_left"],
@@ -157,6 +197,20 @@ class ReportTaxReportXlsx(models.TransientModel):
         ws.write_row(
             row_pos,
             6,
-            [total_base, total_tax],
+            # [total_base, total_tax],
+            [grand_base, grand_tax, grand_total],
             FORMATS["format_theader_blue_amount_right"],
         )
+
+    def _prepare_partner_branch(self, partner):
+        if not partner:
+            return ""
+        display_name = partner.display_name or ""
+        branch_keyword = "สาขาที่"
+        if display_name and branch_keyword in display_name:
+            parts = display_name.split(branch_keyword, 1)
+            branch_value = parts[1].strip() if len(parts) > 1 else ""
+            return branch_value or partner.branch or ""
+        if display_name:
+            return "สำนักงานใหญ่"
+        return partner.branch or ""
