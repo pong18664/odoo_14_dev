@@ -136,13 +136,13 @@ class ReportTaxReportXlsx(models.TransientModel):
         left_values = [
             (report.date_range_id.display_name) if report else "",
             (report.company_id.display_name) if report else "",
-            fields.Date.to_string(report.date_from) if report and report.date_from else "",
+            self._format_date(report.date_from) if report and report.date_from else "",
         ]
         right_labels = ["Tax ID :", "Branch ID :", "End Date :"]
         right_values = [
             (report.company_id.partner_id.vat) if report else "",
-            (report.company_id.partner_id.branch) if report else "-",
-            fields.Date.to_string(report.date_to) if report and report.date_to else "",
+            (report.company_id.partner_id.branch or "-") if report else "-",
+            self._format_date(report.date_to) if report and report.date_to else "",
         ]
         ws.write_column(row_pos, 1, left_labels, FORMATS["format_left_bold"])
         ws.write_column(row_pos, 2, left_values)
@@ -181,7 +181,7 @@ class ReportTaxReportXlsx(models.TransientModel):
                     col_specs_section="data",
                     render_space={
                         "row_pos": row_counter,
-                        "tax_date": line.tax_date or "",
+                        "tax_date": self._format_date(line.tax_date),
                         "tax_invoice_number": line.tax_invoice_number or "",
                         "partner_name": line.partner_id.display_name or "",
                         "partner_vat": line.partner_id.vat or "",
@@ -204,6 +204,7 @@ class ReportTaxReportXlsx(models.TransientModel):
             [grand_base, grand_tax, grand_total],
             FORMATS["format_theader_blue_amount_right"],
         )
+        
 
     def _prepare_partner_branch(self, partner):
         if not partner:
@@ -217,3 +218,11 @@ class ReportTaxReportXlsx(models.TransientModel):
         if display_name:
             return "สำนักงานใหญ่"
         return partner.branch or ""
+    
+
+    def _format_date(self, date_value):
+        if not date_value:
+            return ""
+        if isinstance(date_value, str):
+            date_value = fields.Date.from_string(date_value)
+        return date_value.strftime("%d/%m/%Y")
