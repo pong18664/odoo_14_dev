@@ -85,7 +85,8 @@ class ReportTaxReportXlsx(models.TransientModel):
             "ws_name": "TAX Report",
             "generate_ws_method": "_vat_report",
             "title": "TAX Report",
-            "wanted_list": [k for k in sorted(tax_template.keys())],
+            # "wanted_list": [k for k in sorted(tax_template.keys())],
+            "wanted_list": list(tax_template.keys()),            
             "col_specs": tax_template,
         }
         if objects.tax_id.type_tax_use == "sale":
@@ -140,7 +141,7 @@ class ReportTaxReportXlsx(models.TransientModel):
         right_labels = ["Tax ID :", "Branch ID :", "End Date :"]
         right_values = [
             (report.company_id.partner_id.vat) if report else "",
-            (report.company_id.partner_id.branch) if report else "",
+            (report.company_id.partner_id.branch) if report else "-",
             fields.Date.to_string(report.date_to) if report and report.date_to else "",
         ]
         ws.write_column(row_pos, 1, left_labels, FORMATS["format_left_bold"])
@@ -160,6 +161,7 @@ class ReportTaxReportXlsx(models.TransientModel):
         grand_base = 0.00
         grand_tax = 0.00
         grand_total = 0.00
+        row_counter = 1
         for obj in objects:
             # total_base = 0.00
             # total_tax = 0.00
@@ -178,7 +180,7 @@ class ReportTaxReportXlsx(models.TransientModel):
                     ws_params,
                     col_specs_section="data",
                     render_space={
-                        "row_pos": row_pos - 5,
+                        "row_pos": row_counter,
                         "tax_date": line.tax_date or "",
                         "tax_invoice_number": line.tax_invoice_number or "",
                         "partner_name": line.partner_id.display_name or "",
@@ -194,6 +196,7 @@ class ReportTaxReportXlsx(models.TransientModel):
                     },
                     default_format=FORMATS["format_tcell_left"],
                 )
+                row_counter += 1
         ws.write_row(
             row_pos,
             6,
